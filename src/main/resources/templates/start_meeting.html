@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Live lecture</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='/css/mn.css'>
+</head>
+<body>
+
+  <button id="join-btn">Join</button>
+
+  <div id="stream-wrapper">
+    <div id="video-streams"></div>
+
+    <div id="stream-controls">
+      <button id="leave-btn">Leave Stream</button>
+      <button id="mic-btn">Mic On</button>
+      <button id="camera-btn">Camera on</button>
+      
+       
+     <a href="/whiteboard"> 
+   <button id="showWhiteboardButton" class="btn btn-primary">Open Whiteboard</button></a>
+  </div>
+  </div>
+  </body>
+  <script>
+    const whiteboardContainer = document.getElementById('whiteboardContainer');
+    const showWhiteboardButton = document.getElementById('showWhiteboardButton');
+    const whiteboardUrl = '/whiteboard.html'; 
+
+    showWhiteboardButton.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = whiteboardUrl;
+      iframe.style.width = '100%'; 
+      iframe.style.height = '600px';
+      iframe.frameBorder = 0; 
+
+      whiteboardContainer.appendChild(iframe);
+      whiteboardContainer.style.display = 'block'; 
+    });
+  </script>
+  
+  <script src="/js/AgoraRTC_N-4.7.3.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="agora-rtm-sdk-1.5.1.js"></script>
+</html>

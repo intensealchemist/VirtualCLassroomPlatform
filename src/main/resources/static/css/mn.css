@@ -1,0 +1,74 @@
+body {
+  background: #0D1B2A;
+  background: linear-gradient(to right, #247BA0, #174051, #0D1B2A);
+  color: #fff;
+}
+
+#join-btn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background-color: #247BA0;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#join-btn:hover {
+  background-color: #174051;
+}
+
+#video-streams {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  height: calc(100vh - 50px);
+  width: 90%;
+  margin: 0 auto;
+}
+
+.video-container {
+  max-height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #174051;
+}
+
+.video-player {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  border: none;
+  background-color: #247BA0;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #174051;
+}
+
+#stream-controls {
+  display: none;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+
+.join-button.active + #stream-controls {
+  display: flex;
+}
+
+@media screen and (max-width: 1400px) {
+  #video-streams {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 95%;
+  }
+}

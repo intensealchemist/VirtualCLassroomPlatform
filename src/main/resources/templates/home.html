@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Classroom Platform</title>
+
+  <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
+
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body class="text-black-bg" style="background-image: url('/images/bg-01.jpg');">  
+  <nav class="navbar" th:style="${'color: white; background-color: black'}">
+    <button class="hamburger-menu-btn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  <h1 style="text-shadow: 1px 1px 2px red;">Welcome! <b><span sec:authentication="principal.fullName"></span></b></h1>
+  <ul class="nav-links" style="text-shadow: 1px 1px 2px white;">
+    <li><a href="">About</a></li>
+    <li><a href="">Contact</a></li>
+    <li>
+   <a class="nav-link" th:href="@{/start_meeting}">Join Live lectures</a>
+  </ul>
+</nav>
+  
+
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <h1>Welcome to the Virtual Classroom Platform</h1>
+          <p>Empowering education through virtual learning experiences.</p>
+         
+ <div class="ctr">
+    <h2>Available Courses</h2>
+    <ul class="subject-list">
+      <li class="subject">
+        <h3>Go Programming</h3>
+        <video width="320" height="240" controls>
+          <source src="vid/go.mp4" type="video/mp4">
+        </video>
+      </li>
+      <li class="subject">
+        <h3>Internet Of Things (IoT)</h3>
+        <video width="320" height="240" controls>
+          <source src="vid/iot.mp4" type="video/mp4">
+        </video>
+      </li>
+       <li class="subject">
+        <h3>SOftware Project Management</h3>
+        <video width="320" height="240" controls>
+          <source src="vid/spm.mp4" type="video/mp4">
+        </video>
+      </li>
+      <li class="subject">
+        <h3>Management Information Systems (MIS)</h3>
+        <video width="320" height="240" controls>
+          <source src="vid/mis.mp4" type="video/mp4">
+        </video>
+      </li>
+      <li class="subject">
+        <h3>Android Programming</h3>
+        <video width="320" height="240" controls>
+          <source src="vid/android.mp4" type="video/mp4">
+        </video>
+      </li>
+    </ul>
+
+  </section>
+  
+
+  <section class="about-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2>About Us</h2>
+          <p>This is the HomePage of virtual classroom platform from here you can access our features.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="courses-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2>Featured Courses</h2>
+          <div th:each="course : ${featuredCourses}">
+            <div class="course-card">
+              <h3 th:text="${course.name}"></h3>
+              <p th:text="${course.description}"></p>
+              <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-secondary">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2>Contact Us</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-section" >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p>&copy; 2024 Virtual Classroom Platform. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

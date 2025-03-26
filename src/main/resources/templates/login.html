@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Classroom Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #303030; /* Dark gray background */
+            color: #fff; /* White text color */
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            flex-direction: column;
+        }
+   
+        h1 {
+            text-align: center;
+            margin-top: 50px; 
+            color: #007bff; 
+            font-size: 2em;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 350px; /* Adjust width as needed */
+            padding: 20px;
+            border: 1px solid #808080; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #f0f0f0; /* Light gray background for the form */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+        }
+        /* New styles for label and input positioning */
+        div.form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 15px; /* Add space between form groups */
+        }
+        label {
+            display: inline-block;
+            width: 120px; /* Adjust width as needed */
+            text-align: right;
+            color: #333; /* Dark gray for labels */
+        }
+        input[type="text"], input[type="password"], select {
+            width: 180px; /* Adjust width as needed */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px;
+            background-color: #fff; /* White background for inputs */
+        }
+        button[type="submit"] {
+            background-color: #007bff; /* Blue background for button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px; /* Add space after form elements */
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Virtual Classroom Login</h1>
+    <form th:action="@{/authenticate}" method="post">
+        <div class="form-group">
+            <label for="username">Username or Email:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="teacher">Teacher</option>
+                <option value="student">Student</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Your password here" required>
+        </div>
+        <span class="error" th:if="${param.error != null}">Invalid login credentials</span>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

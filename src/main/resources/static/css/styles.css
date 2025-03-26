@@ -1,0 +1,13 @@
+@charset "ISO-8859-1";
+  .box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            transition: width 0.5s, height 0.5s, background-color 0.5s; 
+        }
+
+        .box:hover {
+            width: 150px;
+            height: 150px;
+            background-color: #e74c3c;
+        }

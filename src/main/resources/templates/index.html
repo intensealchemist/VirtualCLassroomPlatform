@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
+    <title>Virtual Classroom Home</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            border: 10px solid #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: black; 
+            transition: background-color 0.5s; 
+        }
+
+        .navbar:hover {
+            background-color: #333;
+        }
+
+        .container.text-center {
+            background-color: black; 
+            transition: background-color 0.5s; 
+        }
+
+        .container.text-center:hover {
+            background-color: #333; 
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/home}">Virtual Classroom</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="bar1"></span>
+            <span class="bar2"></span>
+            <span class="bar3"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <b>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/home}">Open Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users}">List of Registered Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" th:href="@{/gen_awt}">Zoom JWT</a>
+                    </li>
+                     -->
+                </b>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container text-center">
+        <h1 class="typing-effect">Virtual Classroom Platform</h1>
+    </div>
+
+    <script src="/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</body>
+
+</html>

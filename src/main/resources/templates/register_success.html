@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<link rel="icon" type="image/x-icon" href="./images/logo.jpg">
+<meta charset="ISO-8859-1">
+<title>Registration Success</title>
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body class="text-black-bg" style="background-image: url('/images/bg-01.jpg');">
+	<div class="container text-center">
+		<h3>You have signed up successfully!</h3>
+		<h4>
+			<a th:href="@{/login}" style="text-shadow: 1px 1px 2px black;">Click here to Login</a>
+		</h4>
+	</div>
+
+</body>
+</html>
