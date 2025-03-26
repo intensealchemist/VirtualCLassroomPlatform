@@ -16,6 +16,9 @@ To get started with VirtualCLass-1, follow these instructions:
 
 ### Prerequisites
 
+-Agora SDK & its token(for video chat)
+
+
 Make sure you have the following installed:
 
 - [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
