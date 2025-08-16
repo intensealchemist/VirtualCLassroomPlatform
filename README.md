@@ -199,5 +199,3 @@ For support and questions:
 - 📖 Documentation: [Wiki](https://github.com/yourusername/VirtualCLass-1/wiki)
 
 ---
-
-**Built with ❤️ for modern education**

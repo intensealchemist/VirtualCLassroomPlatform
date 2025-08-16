@@ -31,3 +31,45 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Environment & secrets
+.env
+.env.*
+*.env
+*.secret
+*.secrets
+*.key
+*.pem
+keystore.p12
+
+# Database files (local/dev)
+*.h2.db
+*.mv.db
+*.trace.db
+
+# Spring Boot local configs
+application-local.properties
+application-local.yml
+application-dev.properties
+application-dev.yml
+
+# Uploaded/generated content
+uploads/
+uploads/**
+D:/VirtualCLass-1/src/main/resources/static/vid/
+static/vid/
+
+# Maven wrapper cached
+.mvn/wrapper/
+
+# Crash reports / temp
+hs_err_pid*
+*.tmp
