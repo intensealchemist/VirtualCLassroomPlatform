@@ -1,81 +1,262 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head>
-<link rel="icon" type="image/x-icon" href="./images/logo.jpg">
-<meta charset="ISO-8859-1">
-<title>Sign Up - classroom</title>
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-<style>
-  body {
-    background-color: black;
-    color: white;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Virtual Classroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/modern-theme.css">
+  <style>
+    body {
+      background: var(--gradient-hero);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-md);
+    }
 
-  .form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #212529; 
-    color: white;
-    border: 2px solid white;
-     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    .signup-container {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      padding: var(--spacing-xxl);
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .form-container h1 {
-    text-align: center;
-  }
+    .signup-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
 
-  .form-group label {
-    font-weight: bold;
-  }
-</style>
-<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    .signup-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .signup-header h1 {
+      color: var(--dark-gray);
+      margin-bottom: var(--spacing-sm);
+      font-size: 2rem;
+    }
+
+    .signup-header p {
+      color: var(--gray);
+      margin-bottom: 0;
+    }
+
+    .brand-icon {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+      font-weight: 500;
+      color: var(--dark-gray);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--spacing-md);
+      border: 2px solid #e9ecef;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: var(--transition-fast);
+      background: var(--white);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-signup {
+      width: 100%;
+      background: var(--gradient-secondary);
+      color: var(--white);
+      padding: var(--spacing-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-signup:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .error-message {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+      color: var(--white);
+      padding: var(--spacing-md);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-lg);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid #e9ecef;
+    }
+
+    .login-link a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .role-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    .role-option {
+      position: relative;
+    }
+
+    .role-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .role-option label {
+      display: block;
+      padding: var(--spacing-md);
+      border: 2px solid #e9ecef;
+      border-radius: var(--radius-md);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      background: var(--white);
+    }
+
+    .role-option input[type="radio"]:checked + label {
+      border-color: var(--primary-color);
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--primary-color);
+    }
+
+    @media (max-width: 480px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .role-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div class="container text-center">
-    <div class="form-container">
-      <h1>User Registration - Sign Up</h1>
-      <form th:action="@{/process_register}" th:object="${user}"
-        method="post">
-        <div class="m-3">
-          <div class="form-group row">
-            <label class="col-4 col-form-label">E-mail: </label>
-            <div class="col-8">
-              <input type="email" th:field="*{email}" class="form-control"
-                required placeholder="Enter your email address" />  </div>
-          </div>
+  <div class="signup-container">
+    <div class="signup-header">
+      <div class="brand-icon">🎓</div>
+      <h1>Join Virtual Classroom</h1>
+      <p>Create your account to start learning</p>
+    </div>
+    
+    <div th:if="${error}" class="error-message">
+      ❌ <span th:text="${error}"></span>
+    </div>
+    
+    <form th:action="@{/process_register}" th:object="${user}" method="post">
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" th:field="*{email}" class="form-control" id="email" required
+               placeholder="Enter your email address" />
+      </div>
 
-          <div class="form-group row">
-            <label class="col-4 col-form-label">Password: </label>
-            <div class="col-8">
-              <input type="password" th:field="*{password}" class="form-control"
-                required minlength="6" maxlength="10" placeholder="Enter your password" /> </div>
-          </div>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" th:field="*{password}" class="form-control" id="password" 
+               required minlength="6" maxlength="10" placeholder="Create a strong password" />
+        <small style="color: var(--gray); font-size: 0.875rem;">Must be 6-10 characters long</small>
+      </div>
 
-          <div class="form-group row">
-            <label class="col-4 col-form-label">First Name: </label>
-            <div class="col-8">
-              <input type="text" th:field="*{firstName}" class="form-control"
-                required minlength="2" maxlength="20" placeholder="Enter your first name" />  </div>
-          </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" th:field="*{firstName}" class="form-control" id="firstName" 
+                 required minlength="2" maxlength="20" placeholder="First name" />
+        </div>
 
-          <div class="form-group row">
-            <label class="col-4 col-form-label">Last Name: </label>  <div class="col-8">
-              <input type="text" th:field="*{lastName}" class="form-control"
-                required minlength="2" maxlength="20" placeholder="Enter your last name" />  </div>
-          </div>
+        <div class="form-group">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" th:field="*{lastName}" class="form-control" id="lastName" 
+                 required minlength="2" maxlength="20" placeholder="Last name" />
+        </div>
+      </div>
 
-          <div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+      <div class="form-group">
+        <label class="form-label">Choose Your Role</label>
+        <div class="role-selector">
+          <div class="role-option">
+            <input type="radio" th:field="*{role}" value="STUDENT" id="student" checked>
+            <label for="student">
+              <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🎓</div>
+              <strong>Student</strong>
+              <div style="font-size: 0.875rem; color: var(--gray);">Learn and grow</div>
+            </label>
+          </div>
+          
+          <div class="role-option">
+            <input type="radio" th:field="*{role}" value="INSTRUCTOR" id="instructor">
+            <label for="instructor">
+              <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">👨‍🏫</div>
+              <strong>Instructor</strong>
+              <div style="font-size: 0.875rem; color: var(--gray);">Teach and inspire</div>
+            </label>
           </div>
         </div>
-      </form>
+      </div>
+
+      <button type="submit" class="btn-signup">
+        ✨ Create Account
+      </button>
+    </form>
+    
+    <div class="login-link">
+      <p>Already have an account? <a th:href="@{/login}">Sign in here</a></p>
     </div>
   </div>
 </body>
+
 </html>

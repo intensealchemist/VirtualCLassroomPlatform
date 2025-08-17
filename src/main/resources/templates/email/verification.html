@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify Your Email</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
+    .btn { background-color: #2563eb; color: #fff !important; padding: 10px 16px; text-decoration: none; border-radius: 6px; display: inline-block; }
+    .footer { color: #6b7280; font-size: 12px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Verify your email</h2>
+    <p th:text="'Hi ' + ${user.fullName} + ','">Hi User,</p>
+    <p>Thanks for signing up for Virtual Classroom. Please confirm your email address by clicking the button below:</p>
+    <p>
+      <a class="btn" th:href="${verificationUrl}">Verify Email</a>
+    </p>
+    <p>If the button doesn't work, copy and paste this link into your browser:</p>
+    <p><a th:href="${verificationUrl}" th:text="${verificationUrl}">verification link</a></p>
+    <p class="footer">If you did not create this account, you can safely ignore this email.</p>
+  </div>
+</body>
+</html>

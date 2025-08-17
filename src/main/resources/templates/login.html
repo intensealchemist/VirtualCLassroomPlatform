@@ -4,94 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Classroom Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/modern-theme.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #303030; /* Dark gray background */
-            color: #fff; /* White text color */
-            display: flex; 
+            background: var(--gradient-hero);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh; 
-            flex-direction: column;
+            padding: var(--spacing-md);
         }
-   
-        h1 {
-            text-align: center;
-            margin-top: 50px; 
-            color: #007bff; 
-            font-size: 2em;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 350px; /* Adjust width as needed */
-            padding: 20px;
-            border: 1px solid #808080; /* Light gray border */
-            border-radius: 5px; /* Rounded corners */
-            background-color: #f0f0f0; /* Light gray background for the form */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-        }
-        /* New styles for label and input positioning */
-        div.form-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        
+        .login-container {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: var(--spacing-xxl);
             width: 100%;
-            margin-bottom: 15px; /* Add space between form groups */
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
         }
-        label {
-            display: inline-block;
-            width: 120px; /* Adjust width as needed */
-            text-align: right;
-            color: #333; /* Dark gray for labels */
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
         }
-        input[type="text"], input[type="password"], select {
-            width: 180px; /* Adjust width as needed */
-            padding: 10px;
-            border: 1px solid #ccc; /* Light gray border */
-            border-radius: 3px;
-            background-color: #fff; /* White background for inputs */
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
         }
-        button[type="submit"] {
-            background-color: #007bff; /* Blue background for button */
-            color: white;
-            padding: 10px 20px;
+        
+        .login-header h1 {
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-sm);
+            font-size: 2rem;
+        }
+        
+        .login-header p {
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        .brand-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid #e9ecef;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+            background: var(--white);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn-login {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: var(--spacing-md);
             border: none;
-            border-radius: 3px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 10px; /* Add space after form elements */
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-sm);
         }
-        .error {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 10px;
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: var(--white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Virtual Classroom Login</h1>
-    <form th:action="@{/authenticate}" method="post">
-        <div class="form-group">
-            <label for="username">Username or Email:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="brand-icon">🎓</div>
+            <h1>Welcome Back</h1>
+            <p>Sign in to your Virtual Classroom account</p>
         </div>
-        <div class="form-group">
-            <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="">Select Role</option>
-                <option value="admin">Admin</option>
-                <option value="teacher">Teacher</option>
-                <option value="student">Student</option>
-            </select>
+        
+        <div th:if="${param.error != null}" class="error-message">
+            ❌ Invalid login credentials. Please try again.
         </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Your password here" required>
+        
+        <form th:action="@{/login}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
+            <div class="form-group">
+                <label for="username" class="form-label">Email Address</label>
+                <input type="text" id="username" name="username" class="form-control" 
+                       placeholder="Enter your email address" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" 
+                       placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                🚀 Sign In
+            </button>
+        </form>
+        
+        <div class="signup-link">
+            <p>Don't have an account? <a th:href="@{/register}">Create one here</a></p>
         </div>
-        <span class="error" th:if="${param.error != null}">Invalid login credentials</span>
-        <button type="submit">Login</button>
-    </form>
+    </div>
 </body>
 </html>

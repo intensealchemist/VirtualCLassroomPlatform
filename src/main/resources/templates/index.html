@@ -2,80 +2,219 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-    <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
-    <title>Virtual Classroom Home</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css">
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Classroom Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/modern-theme.css">
     <style>
         body {
-            background-color: black;
-            color: white;
-            border: 10px solid #ffffff;
+            background: var(--gradient-hero);
+            min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
-        .navbar {
-            background-color: black; 
-            transition: background-color 0.5s; 
+        .landing-navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .navbar:hover {
-            background-color: #333;
+        .landing-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
         }
 
-        .container.text-center {
-            background-color: black; 
-            transition: background-color 0.5s; 
+        .navbar-brand {
+            font-family: var(--font-family-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
         }
 
-        .container.text-center:hover {
-            background-color: #333; 
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            background: var(--light-gray);
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark-gray);
+            margin: 3px 0;
+            transition: var(--transition-fast);
+        }
+
+        .hero-landing {
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-landing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .hero-landing h1 {
+            font-size: 3.5rem;
+            margin-bottom: var(--spacing-lg);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-landing p {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero-landing h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" th:href="@{/home}">Virtual Classroom</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="bar1"></span>
-            <span class="bar2"></span>
-            <span class="bar3"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <b>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/home}">Open Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/users}">List of Registered Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/register}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" th:href="@{/gen_awt}">Zoom JWT</a>
-                    </li>
-                     -->
-                </b>
+    <!-- Modern Landing Navigation -->
+    <nav class="landing-navbar">
+        <div class="landing-container">
+            <a href="/" class="navbar-brand">🎓 Virtual Classroom</a>
+            
+            <ul class="nav-menu">
+                <li><a th:href="@{/home}" class="nav-link">Dashboard</a></li>
+                <li><a th:href="@{/users}" class="nav-link">Community</a></li>
+                <li><a th:href="@{/register}" class="btn btn-outline">Sign Up</a></li>
+                <li><a th:href="@{/login}" class="btn btn-primary">Login</a></li>
             </ul>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
-    <div class="container text-center">
-        <h1 class="typing-effect">Virtual Classroom Platform</h1>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero-landing">
+        <div class="hero-content">
+            <h1 class="typing-effect">Transform Your Learning Journey</h1>
+            <p>Experience the future of education with our comprehensive virtual classroom platform. Connect, learn, and grow with students and instructors from around the world.</p>
+            
+            <div class="cta-buttons">
+                <a th:href="@{/register}" class="btn btn-primary btn-lg">🚀 Get Started Free</a>
+                <a th:href="@{/home}" class="btn btn-outline btn-lg">🎯 Explore Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Preview -->
+    <section style="padding: var(--spacing-xxl) 0; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl);">
+                <div style="text-align: center; color: var(--white);">
+                    <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎥</div>
+                    <h3>Live Sessions</h3>
+                    <p style="opacity: 0.9;">Interactive live classes with real-time collaboration</p>
+                </div>
+                
+                <div style="text-align: center; color: var(--white);">
+                    <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">📚</div>
+                    <h3>Rich Content</h3>
+                    <p style="opacity: 0.9;">Comprehensive courses with videos, assignments, and resources</p>
+                </div>
+                
+                <div style="text-align: center; color: var(--white);">
+                    <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🏆</div>
+                    <h3>Certifications</h3>
+                    <p style="opacity: 0.9;">Earn recognized certificates upon course completion</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 </body>
 
 </html>

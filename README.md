@@ -126,7 +126,7 @@
 
 ```bash
 # 1️⃣ Clone the repository
-git clone https://github.com/yourusername/VirtualCLass-1.git
+git clone https://github.com/intensealchemist/VirtualCLass-1.git
 cd VirtualCLass-1
 
 # 2️⃣ Configure Database (Optional - H2 is configured by default)

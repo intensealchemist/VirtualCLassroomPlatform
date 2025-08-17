@@ -1,122 +1,277 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Virtual Classroom Platform</title>
-
-  <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/modern-theme.css">
   <link rel="stylesheet" href="/css/index.css">
 </head>
 
-<body class="text-black-bg" style="background-image: url('/images/bg-01.jpg');">  
-  <nav class="navbar" th:style="${'color: white; background-color: black'}">
-    <button class="hamburger-menu-btn">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-  <h1 style="text-shadow: 1px 1px 2px red;">Welcome! <b><span sec:authentication="principal.fullName"></span></b></h1>
-  <ul class="nav-links" style="text-shadow: 1px 1px 2px white;">
-    <li><a href="">About</a></li>
-    <li><a href="">Contact</a></li>
-    <li>
-   <a class="nav-link" th:href="@{/start_meeting}">Join Live lectures</a>
-  </ul>
-</nav>
+<body>
+  <!-- Modern Navigation -->
+  <nav class="navbar">
+    <div class="container d-flex justify-between align-center">
+      <div class="navbar-brand">🎓 Virtual Classroom</div>
+      <div class="d-flex align-center">
+        <span class="mr-3" style="color: var(--primary-color); font-weight: 500;">
+          Welcome, <span sec:authentication="principal.fullName" style="font-weight: 600;"></span>!
+        </span>
+        <ul class="navbar-nav">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#courses" class="nav-link">Courses</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a th:href="@{/start_meeting}" class="btn btn-primary btn-sm">🎥 Join Live Lectures</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   
 
-  <section class="hero-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-          <h1>Welcome to the Virtual Classroom Platform</h1>
-          <p>Empowering education through virtual learning experiences.</p>
-         
- <div class="ctr">
-    <h2>Available Courses</h2>
-    <ul class="subject-list">
-      <li class="subject">
-        <h3>Go Programming</h3>
-        <video width="320" height="240" controls>
-          <source src="vid/go.mp4" type="video/mp4">
-        </video>
-      </li>
-      <li class="subject">
-        <h3>Internet Of Things (IoT)</h3>
-        <video width="320" height="240" controls>
-          <source src="vid/iot.mp4" type="video/mp4">
-        </video>
-      </li>
-       <li class="subject">
-        <h3>SOftware Project Management</h3>
-        <video width="320" height="240" controls>
-          <source src="vid/spm.mp4" type="video/mp4">
-        </video>
-      </li>
-      <li class="subject">
-        <h3>Management Information Systems (MIS)</h3>
-        <video width="320" height="240" controls>
-          <source src="vid/mis.mp4" type="video/mp4">
-        </video>
-      </li>
-      <li class="subject">
-        <h3>Android Programming</h3>
-        <video width="320" height="240" controls>
-          <source src="vid/android.mp4" type="video/mp4">
-        </video>
-      </li>
-    </ul>
-
-  </section>
-  
-
-  <section class="about-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2>About Us</h2>
-          <p>This is the HomePage of virtual classroom platform from here you can access our features.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="container">
+        <h1 class="typing-effect">Welcome to Virtual Classroom Platform</h1>
+        <p>Empowering education through innovative virtual learning experiences. Join thousands of students in our interactive online courses.</p>
+        <div class="d-flex justify-center" style="gap: var(--spacing-lg); flex-wrap: wrap;">
+          <a href="#courses" class="btn btn-primary btn-lg">🚀 Explore Courses</a>
+          <a th:href="@{/start_meeting}" class="btn btn-outline btn-lg">🎥 Join Live Session</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="courses-section">
+  <!-- Courses Section -->
+  <section id="courses" style="padding: var(--spacing-xxl) 0;">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2>Featured Courses</h2>
-          <div th:each="course : ${featuredCourses}">
-            <div class="course-card">
-              <h3 th:text="${course.name}"></h3>
-              <p th:text="${course.description}"></p>
-              <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-secondary">Learn More</a>
+      <div class="text-center mb-4">
+        <h2>Available Courses</h2>
+        <p style="font-size: 1.125rem; color: var(--gray);">Choose from our comprehensive selection of technology courses</p>
+      </div>
+      
+      <div class="course-grid">
+        <div class="course-card">
+          <div class="course-video">
+            <div style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-sm);">🐹</div>
+              <video width="100%" height="200" controls style="border-radius: var(--radius-md);">
+                <source src="/vid/go.mp4" type="video/mp4">
+              </video>
             </div>
+          </div>
+          <div class="course-info">
+            <h3 class="course-title">Go Programming</h3>
+            <p>Master the Go programming language with hands-on projects and real-world applications.</p>
+            <a href="#" class="btn btn-primary">Start Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-video">
+            <div style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-sm);">🌐</div>
+              <video width="100%" height="200" controls style="border-radius: var(--radius-md);">
+                <source src="/vid/iot.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="course-info">
+            <h3 class="course-title">Internet of Things (IoT)</h3>
+            <p>Explore the connected world of IoT devices, sensors, and smart systems.</p>
+            <a href="#" class="btn btn-primary">Start Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-video">
+            <div style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-sm);">📊</div>
+              <video width="100%" height="200" controls style="border-radius: var(--radius-md);">
+                <source src="/vid/spm.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="course-info">
+            <h3 class="course-title">Software Project Management</h3>
+            <p>Learn agile methodologies, project planning, and team leadership skills.</p>
+            <a href="#" class="btn btn-primary">Start Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-video">
+            <div style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-sm);">💼</div>
+              <video width="100%" height="200" controls style="border-radius: var(--radius-md);">
+                <source src="/vid/mis.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="course-info">
+            <h3 class="course-title">Management Information Systems</h3>
+            <p>Understand how technology drives business decisions and organizational efficiency.</p>
+            <a href="#" class="btn btn-primary">Start Learning</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-video">
+            <div style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--spacing-sm);">📱</div>
+              <video width="100%" height="200" controls style="border-radius: var(--radius-md);">
+                <source src="/vid/android.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="course-info">
+            <h3 class="course-title">Android Programming</h3>
+            <p>Build powerful mobile applications for the Android platform using modern tools.</p>
+            <a href="#" class="btn btn-primary">Start Learning</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- About Section -->
+  <section id="about" style="padding: var(--spacing-xxl) 0; background: var(--white);">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2>About Our Platform</h2>
+        <p style="font-size: 1.125rem; color: var(--gray); max-width: 600px; margin: 0 auto;">
+          Experience the future of education with our comprehensive virtual classroom platform designed for modern learners.
+        </p>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl); margin-top: var(--spacing-xl);">
+        <div class="card">
+          <div class="card-body text-center">
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🎯</div>
+            <h3>Interactive Learning</h3>
+            <p>Engage with interactive content, live sessions, and collaborative tools designed to enhance your learning experience.</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">👥</div>
+            <h3>Expert Instructors</h3>
+            <p>Learn from industry professionals and experienced educators who bring real-world knowledge to the classroom.</p>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🚀</div>
+            <h3>Career Growth</h3>
+            <p>Build skills that matter in today's job market with our industry-relevant curriculum and certification programs.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="contact-section">
+  <!-- Featured Courses Section -->
+  <section style="padding: var(--spacing-xxl) 0; background: var(--light-gray);">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2>Contact Us</h2>
+      <div class="text-center mb-4">
+        <h2>Featured Courses</h2>
+        <p style="font-size: 1.125rem; color: var(--gray);">Discover our most popular and highly-rated courses</p>
+      </div>
+      
+      <div class="course-grid" th:if="${featuredCourses}">
+        <div th:each="course : ${featuredCourses}" class="course-card">
+          <div class="card-header">
+            <h3 th:text="${course.name}" class="mb-0" style="color: var(--white);"></h3>
+          </div>
+          <div class="card-body">
+            <p th:text="${course.description}"></p>
+            <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+      
+      <div th:unless="${featuredCourses}" class="text-center">
+        <div class="card" style="max-width: 500px; margin: 0 auto;">
+          <div class="card-body">
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">📚</div>
+            <h3>More Courses Coming Soon!</h3>
+            <p>We're constantly adding new courses to our platform. Check back regularly for updates.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="footer-section" >
+  <!-- Contact Section -->
+  <section id="contact" style="padding: var(--spacing-xxl) 0; background: var(--white);">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <p>&copy; 2024 Virtual Classroom Platform. All rights reserved.</p>
+      <div class="text-center mb-4">
+        <h2>Get In Touch</h2>
+        <p style="font-size: 1.125rem; color: var(--gray);">Have questions? We're here to help you succeed.</p>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-xl); max-width: 800px; margin: 0 auto;">
+        <div class="card">
+          <div class="card-body text-center">
+            <div style="font-size: 2.5rem; margin-bottom: var(--spacing-md);">📧</div>
+            <h4>Email Support</h4>
+            <p>Get help with technical issues or course questions</p>
+            <a href="mailto:support@virtualclassroom.com" class="btn btn-outline">Contact Support</a>
+          </div>
         </div>
+        
+        <div class="card">
+          <div class="card-body text-center">
+            <div style="font-size: 2.5rem; margin-bottom: var(--spacing-md);">💬</div>
+            <h4>Live Chat</h4>
+            <p>Chat with our team during business hours</p>
+            <button class="btn btn-primary" onclick="alert('Live chat feature coming soon!')">Start Chat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: var(--gradient-dark); color: var(--white); padding: var(--spacing-xl) 0;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+        <div>
+          <h4 style="color: var(--white); margin-bottom: var(--spacing-md);">🎓 Virtual Classroom</h4>
+          <p style="opacity: 0.8;">Empowering education through innovative virtual learning experiences.</p>
+        </div>
+        
+        <div>
+          <h5 style="color: var(--white); margin-bottom: var(--spacing-md);">Quick Links</h5>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: var(--spacing-sm);"><a href="#courses" style="color: rgba(255,255,255,0.8);">Courses</a></li>
+            <li style="margin-bottom: var(--spacing-sm);"><a href="#about" style="color: rgba(255,255,255,0.8);">About</a></li>
+            <li style="margin-bottom: var(--spacing-sm);"><a href="#contact" style="color: rgba(255,255,255,0.8);">Contact</a></li>
+            <li><a th:href="@{/start_meeting}" style="color: rgba(255,255,255,0.8);">Live Sessions</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h5 style="color: var(--white); margin-bottom: var(--spacing-md);">Connect</h5>
+          <div style="display: flex; gap: var(--spacing-md);">
+            <a href="#" style="color: rgba(255,255,255,0.8); font-size: 1.5rem;">📘</a>
+            <a href="#" style="color: rgba(255,255,255,0.8); font-size: 1.5rem;">🐦</a>
+            <a href="#" style="color: rgba(255,255,255,0.8); font-size: 1.5rem;">💼</a>
+            <a href="#" style="color: rgba(255,255,255,0.8); font-size: 1.5rem;">📸</a>
+          </div>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: var(--spacing-lg); text-align: center;">
+        <p style="opacity: 0.8; margin: 0;">&copy; 2024 Virtual Classroom Platform. All rights reserved.</p>
       </div>
     </div>
   </footer>

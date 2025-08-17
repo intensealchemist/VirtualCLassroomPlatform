@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome to Virtual Classroom</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container { max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
+    .btn { background-color: #16a34a; color: #fff !important; padding: 10px 16px; text-decoration: none; border-radius: 6px; display: inline-block; }
+    .footer { color: #6b7280; font-size: 12px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome!</h2>
+    <p th:text="'Hi ' + ${user.fullName} + ','">Hi User,</p>
+    <p>We're excited to have you on board. Click below to go to your dashboard:</p>
+    <p>
+      <a class="btn" th:href="${dashboardUrl}">Go to Dashboard</a>
+    </p>
+    <p class="footer">Happy learning!</p>
+  </div>
+</body>
+</html>

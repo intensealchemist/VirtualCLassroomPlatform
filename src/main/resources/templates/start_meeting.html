@@ -25,24 +25,8 @@
   </div>
   </div>
   </body>
-  <script>
-    const whiteboardContainer = document.getElementById('whiteboardContainer');
-    const showWhiteboardButton = document.getElementById('showWhiteboardButton');
-    const whiteboardUrl = '/whiteboard.html'; 
-
-    showWhiteboardButton.addEventListener('click', () => {
-      const iframe = document.createElement('iframe');
-      iframe.src = whiteboardUrl;
-      iframe.style.width = '100%'; 
-      iframe.style.height = '600px';
-      iframe.frameBorder = 0; 
-
-      whiteboardContainer.appendChild(iframe);
-      whiteboardContainer.style.display = 'block'; 
-    });
-  </script>
   
   <script src="/js/AgoraRTC_N-4.7.3.js"></script>
   <script src="/js/main.js"></script>
-  <script src="agora-rtm-sdk-1.5.1.js"></script>
+  <script src="/js/agora-rtm-sdk-1.5.1.js"></script>
 </html>

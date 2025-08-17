@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-<link rel="icon" type="image/x-icon" href="./images/logo.jpg">
-<meta charset="ISO-8859-1">
-<title>Registration Success</title>
-<link rel="stylesheet" href="/css/index.css">
-
+  <link rel="icon" type="image/x-icon" href="/images/logo.jpg">
+  <meta charset="ISO-8859-1">
+  <title>Registration Success - Virtual Classroom</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .success-container {
+      max-width: 500px;
+      padding: 40px;
+      border-radius: 10px;
+      background-color: #212529;
+      color: white;
+      border: 2px solid #28a745;
+      text-align: center;
+    }
+    .success-icon {
+      font-size: 4em;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+    .btn-login {
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 12px 30px;
+      font-size: 1.1em;
+      margin-top: 20px;
+    }
+    .btn-login:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
 </head>
-<body class="text-black-bg" style="background-image: url('/images/bg-01.jpg');">
-	<div class="container text-center">
-		<h3>You have signed up successfully!</h3>
-		<h4>
-			<a th:href="@{/login}" style="text-shadow: 1px 1px 2px black;">Click here to Login</a>
-		</h4>
-	</div>
-
+<body>
+  <div class="success-container">
+    <div class="success-icon">✓</div>
+    <h2>Registration Successful!</h2>
+    <p th:if="${message}" th:text="${message}" class="mb-4"></p>
+    <p th:unless="${message}" class="mb-4">You have successfully registered for Virtual Classroom. You can now login with your credentials.</p>
+    <a th:href="@{/login}" class="btn btn-primary btn-login">Login Now</a>
+  </div>
 </body>
 </html>

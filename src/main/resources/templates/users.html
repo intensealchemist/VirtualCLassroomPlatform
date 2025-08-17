@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-<link rel="icon" type="image/x-icon" href="./images/logo.jpg">
+<link rel="icon" type="image/x-icon" href="/images/logo.jpg">
+
 <meta charset="ISO-8859-1">
 <title>List Users</title>
 <link rel="stylesheet" type="text/css"
@@ -17,6 +18,7 @@
 				<p>
 Welcome <b><span sec:authentication="principal.fullName"></span></b>
 				</p>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 				<input type="submit" value="Sign Out" />
 			</form>
 		</div>
