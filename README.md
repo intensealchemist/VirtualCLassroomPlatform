@@ -122,22 +122,131 @@
 </tr>
 </table>
 
-### ⚡ Installation Steps
+### ⚡ Installation & Setup
 
+#### 🔧 **Method 1: Using Maven Wrapper (Recommended)**
 ```bash
 # 1️⃣ Clone the repository
 git clone https://github.com/intensealchemist/VirtualCLass-1.git
 cd VirtualCLass-1
 
-# 2️⃣ Configure Database (Optional - H2 is configured by default)
-# Update src/main/resources/application.properties for MySQL:
-# spring.datasource.url=jdbc:mysql://localhost:3306/virtual_classroom
-# spring.datasource.username=your_username
-# spring.datasource.password=your_password
+# 2️⃣ Make Maven wrapper executable (Linux/Mac)
+chmod +x mvnw
 
-# 3️⃣ Build and Run
+# 3️⃣ Build and run the application
 ./mvnw clean install
 ./mvnw spring-boot:run
+
+# For Windows users:
+.\mvnw.cmd clean install
+.\mvnw.cmd spring-boot:run
+```
+
+#### 🔧 **Method 2: Using Local Maven Installation**
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/intensealchemist/VirtualCLass-1.git
+cd VirtualCLass-1
+
+# 2️⃣ Build and run with Maven
+mvn clean install
+mvn spring-boot:run
+```
+
+#### 🔧 **Method 3: Using IDE (IntelliJ IDEA/Eclipse)**
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/intensealchemist/VirtualCLass-1.git
+
+# 2️⃣ Import as Maven project in your IDE
+# 3️⃣ Run the main class: VirtualClassroomApplication.java
+# 4️⃣ Application will start on port 4100
+```
+
+### 🗄️ Database Configuration
+
+#### **Option 1: H2 In-Memory Database (Default - No Setup Required)**
+```properties
+# Already configured in application.properties
+# Perfect for development and testing
+# Access H2 Console: http://localhost:4100/h2-console
+```
+
+#### **Option 2: MySQL Database (Production Recommended)**
+```bash
+# 1️⃣ Create MySQL database
+mysql -u root -p
+CREATE DATABASE virtual_classroom;
+CREATE USER 'vc_user'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON virtual_classroom.* TO 'vc_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+# 2️⃣ Update application.properties
+```
+
+```properties
+# MySQL Configuration (add to application.properties)
+spring.datasource.url=jdbc:mysql://localhost:3306/virtual_classroom
+spring.datasource.username=vc_user
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+```
+
+### 🚀 Running the Application
+
+```bash
+# Start the application
+./mvnw spring-boot:run
+
+# Or with custom port
+./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8080
+
+# Run with specific profile
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+
+# Build JAR file
+./mvnw clean package
+
+# Run JAR file
+java -jar target/virtual-classroom-1.0.0.jar
+```
+
+### 🔧 Development Commands
+
+```bash
+# Clean and compile
+./mvnw clean compile
+
+# Run tests
+./mvnw test
+
+# Generate test coverage report
+./mvnw jacoco:report
+
+# Check for dependency updates
+./mvnw versions:display-dependency-updates
+
+# Format code (if spotless plugin is configured)
+./mvnw spotless:apply
+
+# Build without tests (faster)
+./mvnw clean package -DskipTests
+```
+
+### 🐳 Docker Support
+
+```bash
+# Build Docker image
+docker build -t virtual-classroom .
+
+# Run with Docker Compose
+docker-compose up -d
+
+# Stop services
+docker-compose down
 ```
 
 ### 🌐 Access Points
@@ -152,6 +261,18 @@ cd VirtualCLass-1
 | 🗄️ **H2 Console** | http://localhost:4100/h2-console | Database management |
 
 </div>
+
+### 🎯 Default Login Credentials
+
+For testing purposes, you can use these default accounts:
+
+| Role | Email | Password | Description |
+|------|-------|----------|-------------|
+| 🛡️ **Admin** | admin@virtualclassroom.com | admin123 | Full system access |
+| 👨‍🏫 **Instructor** | instructor@virtualclassroom.com | instructor123 | Course management |
+| 🎓 **Student** | student@virtualclassroom.com | student123 | Course enrollment |
+
+> **Note:** Change these credentials in production environments for security.
 
 ---
 
