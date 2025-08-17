@@ -366,6 +366,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <img src="https://img.shields.io/github/stars/yourusername/VirtualCLass-1?style=social" alt="GitHub stars">
 
-*Made with ❤️ by the Virtual Classroom Team*
 
 </div>
