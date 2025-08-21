@@ -14,13 +14,20 @@
 <body>
 	<div class="container text-center">
 		<div>
-			<form th:action="@{/logout}" method="post">
+			<div>
 				<p>
+					<span sec:authorize="isAuthenticated()">
 Welcome <b><span sec:authentication="principal.fullName"></span></b>
+					</span>
+					<span sec:authorize="isAnonymous()">
+Welcome <b>Guest</b> — <a th:href="@{/login}">Sign in</a>
+					</span>
 				</p>
-				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-				<input type="submit" value="Sign Out" />
-			</form>
+				<form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/logout}" method="post">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					<input type="submit" value="Sign Out" />
+				</form>
+			</div>
 		</div>
 		<div>
 			<h1>List of Registered Users</h1>

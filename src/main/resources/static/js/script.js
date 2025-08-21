@@ -29,4 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (fileInput) fileInput.value = '';
     });
   }
+
+  // Footer year auto-increment (if footer span present)
+  const yearEl = document.getElementById('current-year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
 });

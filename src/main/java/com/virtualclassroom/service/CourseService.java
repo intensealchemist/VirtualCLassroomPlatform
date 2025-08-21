@@ -2,6 +2,7 @@ package com.virtualclassroom.service;
 
 import com.virtualclassroom.model.*;
 import com.virtualclassroom.repository.CourseRepository;
+import com.virtualclassroom.repository.CourseCategoryRepository;
 import com.virtualclassroom.repository.CourseEnrollmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,9 @@ public class CourseService {
     
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private CourseCategoryRepository courseCategoryRepository;
     
     public Course createCourse(String title, String courseCode, String description, 
                               User instructor, CourseCategory category) {
@@ -41,6 +45,22 @@ public class CourseService {
         course.setStatus(CourseStatus.DRAFT);
         
         return courseRepository.save(course);
+    }
+
+    /**
+     * Persist arbitrary changes to a Course entity.
+     */
+    public Course save(Course course) {
+        return courseRepository.save(course);
+    }
+
+    public java.util.List<CourseCategory> getActiveCategories() {
+        return courseCategoryRepository.findActiveOrdered();
+    }
+
+    public java.util.Optional<CourseCategory> findActiveCategoryByNameIgnoreCase(String name) {
+        if (name == null) return java.util.Optional.empty();
+        return courseCategoryRepository.findActiveByNameIgnoreCase(name.trim());
     }
     
     public Course updateCourse(Long courseId, String title, String description, 

@@ -68,9 +68,11 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(authz -> authz
                 // Public endpoints
-                .requestMatchers("/", "/home", "/about", "/contact").permitAll()
+                .requestMatchers("/", "/index", "/index.html", "/home", "/about", "/contact").permitAll()
+                .requestMatchers("/guest").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                .requestMatchers("/static/**", "/public/**", "/assets/**").permitAll()
                 .requestMatchers("/favicon.ico", "/error").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
 
@@ -111,7 +113,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")                // GET /login returns the form
                 .loginProcessingUrl("/login")       // Spring Security handles POST /login
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/dashboard", true)
                 .permitAll()
             )
             .logout(logout -> logout

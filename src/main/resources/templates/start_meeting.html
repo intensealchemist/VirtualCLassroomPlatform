@@ -27,6 +27,15 @@
   </body>
   
   <script src="/js/AgoraRTC_N-4.7.3.js"></script>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    window.AGORA_CONF = {
+      appId: /*[[${appId}]]*/ null,
+      channel: /*[[${channel}]]*/ 'main',
+      token: /*[[${token}]]*/ null
+    };
+    /*]]>*/
+  </script>
   <script src="/js/main.js"></script>
   <script src="/js/agora-rtm-sdk-1.5.1.js"></script>
 </html>

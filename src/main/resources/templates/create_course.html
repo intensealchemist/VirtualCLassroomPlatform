@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Course • Virtual Classroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/modern-theme.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- Top Nav -->
+  <nav class="navbar" role="navigation" aria-label="Primary">
+    <div class="container d-flex justify-between align-center">
+      <a href="/" class="navbar-brand" aria-label="Virtual Classroom home">
+        <svg class="logo-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:24px;height:24px;margin-right:8px;">
+          <polygon points="12,3 2,8 12,13 22,8 12,3" fill="currentColor"></polygon>
+          <rect x="11" y="13" width="2" height="6" rx="1" fill="currentColor"></rect>
+        </svg>
+        <span>Virtual Classroom</span>
+      </a>
+      <div class="d-flex align-center navbar-actions" style="gap: 8px;">
+        <a href="/dashboard/instructor" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i>&nbsp; Back to Dashboard</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container d-flex justify-between align-center">
+      <div>
+        <h1 class="mb-0">Create New Course</h1>
+        <p class="muted">Define course details, level, and visibility</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 24px; padding-bottom: 48px;">
+    <section class="card" style="max-width: 900px; margin: 0 auto;">
+      <div class="card-body">
+        <form th:action="@{/instructor/courses/create}" method="post" enctype="application/x-www-form-urlencoded" novalidate>
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+          <div class="form-group">
+            <label for="name" class="form-label">Course Title</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="e.g., Android Development Bootcamp" required th:value="${(form != null and form['name'] != null) ? form['name'] : ''}">
+            <small class="form-error" th:if="${errors != null and errors.containsKey('name')}" th:text="${errors.get('name')}"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-control" rows="5" placeholder="Briefly describe the course content and outcomes" required th:text="${(form != null and form['description'] != null) ? form['description'] : ''}"></textarea>
+            <small class="form-error" th:if="${errors != null and errors.containsKey('description')}" th:text="${errors.get('description')}"></small>
+          </div>
+
+          <div class="d-flex" style="gap: 16px; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1 1 220px;">
+              <label for="category" class="form-label">Category</label>
+              <select id="category" name="category" class="form-control">
+                <option value="" th:selected="${(form == null) or (form['category'] == null) or #strings.isEmpty(form['category'])}">Choose a category</option>
+                <option th:each="c : ${categories}"
+                        th:value="${c.name}"
+                        th:text="${c.name}"
+                        th:selected="${form != null and form['category'] != null and form['category'].equals(c.name)}"></option>
+              </select>
+              <small class="form-error" th:if="${errors != null and errors.containsKey('category')}" th:text="${errors.get('category')}"></small>
+            </div>
+
+            <div class="form-group" style="flex: 1 1 220px;">
+              <label for="level" class="form-label">Level</label>
+              <select id="level" name="level" class="form-control" required>
+                <option value="" th:selected="${(form == null) or (form['level'] == null) or #strings.isEmpty(form['level'])}">Choose level</option>
+                <option th:each="l : ${levels}"
+                        th:value="${l}"
+                        th:text="${l}"
+                        th:selected="${form != null and form['level'] != null and form['level'].equals(l)}"></option>
+              </select>
+              <small class="form-error" th:if="${errors != null and errors.containsKey('level')}" th:text="${errors.get('level')}"></small>
+            </div>
+
+            <div class="form-group" style="flex: 1 1 200px;">
+              <label for="price" class="form-label">Price (USD)</label>
+              <input type="number" id="price" name="price" class="form-control" step="0.01" min="0" placeholder="0.00" th:value="${(form != null and form['price'] != null) ? form['price'] : ''}">
+              <small class="form-error" th:if="${errors != null and errors.containsKey('price')}" th:text="${errors.get('price')}"></small>
+            </div>
+          </div>
+
+          <div class="d-flex align-center" style="gap: 12px; margin-top: 4px;">
+            <input type="checkbox" id="published" name="published" value="true" style="width: 18px; height: 18px;" th:checked="${form != null and form['published'] != null}">
+            <label for="published" class="form-label" style="margin: 0;">Publish immediately</label>
+          </div>
+
+          <div class="d-flex" style="gap: 12px; margin-top: 24px;">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>&nbsp; Create Course</button>
+            <a href="/dashboard/instructor" class="btn btn-outline">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="padding: 24px 0;">
+    <div class="container text-center">
+      <p class="mb-0">&copy; <span id="year"></span> Virtual Classroom Platform</p>
+    </div>
+  </footer>
+
+  <script>
+    (function(){ var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear(); })();
+  </script>
+</body>
+</html>

@@ -21,6 +21,22 @@
 
 </div>
 
+## 📸 Screenshots
+
+<div align="center">
+
+| Home | Instructor Dashboard | Student Dashboard |
+|---|---|---|
+| ![Home](docs/screenshots/home.png) | ![Instructor Dashboard](docs/screenshots/dashboard_instructor.png) | ![Student Dashboard](docs/screenshots/dashboard_student.png) |
+
+| Live Meeting | Whiteboard |
+|---|---|
+| ![Live Meeting](docs/screenshots/live_meeting.png) | ![Whiteboard](docs/screenshots/whiteboard.png) |
+
+</div>
+
+> Place your images under `docs/screenshots/`. Filenames above are placeholders.
+
 ## ✨ Features Overview
 
 <table>
@@ -46,6 +62,7 @@
 - 🧵 Threaded conversations and replies
 - 🔔 Real-time notifications
 - 💌 In-app messaging system
+- 🎥 Live video meetings (Agora RTC)
 
 </td>
 <td width="50%">
@@ -124,6 +141,13 @@
 
 ### ⚡ Installation & Setup
 
+> Note on Maven vs Maven Wrapper
+>
+> - You can run the project with the Maven Wrapper (recommended) or a locally installed Maven.
+> - Windows (PowerShell/CMD): use `.\mvnw.cmd ...`
+> - Git Bash/macOS/Linux: use `./mvnw ...`
+> - If Maven is installed and on PATH, you can use `mvn ...` instead of the wrapper.
+
 #### 🔧 **Method 1: Using Maven Wrapper (Recommended)**
 ```bash
 # 1️⃣ Clone the repository
@@ -160,7 +184,7 @@ git clone https://github.com/intensealchemist/VirtualCLass-1.git
 
 # 2️⃣ Import as Maven project in your IDE
 # 3️⃣ Run the main class: VirtualClassroomApplication.java
-# 4️⃣ Application will start on port 4100
+# 4️⃣ Application will start on port 8080
 ```
 
 ### 🗄️ Database Configuration
@@ -169,7 +193,7 @@ git clone https://github.com/intensealchemist/VirtualCLass-1.git
 ```properties
 # Already configured in application.properties
 # Perfect for development and testing
-# Access H2 Console: http://localhost:4100/h2-console
+# Access H2 Console: http://localhost:8080/h2-console
 ```
 
 #### **Option 2: MySQL Database (Production Recommended)**
@@ -211,8 +235,59 @@ spring.jpa.hibernate.ddl-auto=update
 ./mvnw clean package
 
 # Run JAR file
-java -jar target/virtual-classroom-1.0.0.jar
+java -jar target/virtual-classroom-platform-2.0.0.jar
 ```
+
+### 🎥 Live Meetings (Agora) Setup
+
+Follow these steps to enable live video sessions using Agora:
+
+1. __Create an Agora project__
+    - Sign up at https://console.agora.io and create a project (Web SDK).
+    - Copy your project’s App ID.
+
+2. __Generate a temporary token (for development)__
+    - In the Agora Console, open your project and generate a temporary token for the channel you plan to use (default here: `main`).
+    - For quick testing you may also set `TOKEN` to `null` if your Agora project does NOT have an App Certificate enabled. Tokens are recommended and required when a certificate is enabled.
+
+3. __Configure credentials (no code change required)__
+   - The page `templates/start_meeting.html` injects config to `window.AGORA_CONF`, and `static/js/main.js` reads it at runtime.
+   - Choose one of the following:
+
+   - __Option A: Environment variables__ (recommended for local dev)
+     - Windows PowerShell:
+       ```powershell
+       $env:AGORA_APP_ID = "<your_app_id>"
+       $env:AGORA_CHANNEL = "main"           # optional
+       $env:AGORA_TOKEN = "<temp_token>"     # or leave unset/null if no certificate
+       .\mvnw.cmd spring-boot:run
+       ```
+
+   - __Option B: application.properties__
+     - Add these keys (or set via a profile-specific properties file):
+       ```properties
+       agora.app-id=<your_app_id>
+       agora.channel=main
+       agora.token=<temp_token_or_blank>
+       ```
+
+4. __Run and test locally__
+    - Start the app: `./mvnw spring-boot:run`
+    - Visit `http://localhost:8080/start_meeting`
+    - Click Join and allow camera/microphone permissions in the browser.
+    - Open the same URL in another browser or machine (using the same CHANNEL) to see remote participants.
+
+5. __Whiteboard (optional)__
+    - From the meeting page, click “Open Whiteboard” or go to `http://localhost:8080/whiteboard`.
+
+6. __Production guidance__
+    - Do not hardcode tokens. Implement a lightweight token server to mint short‑lived tokens on demand.
+    - See: Web Token Server Guides https://docs.agora.io/en/Interactive%20Live%20Streaming/token_server?platform=All%20Platforms
+
+7. __Common issues__
+    - 403/Invalid vendor key or token: verify `APP_ID`, `TOKEN`, and channel match; regenerate an unexpired token.
+    - No audio/video: grant browser permissions; use HTTPS in production; avoid mixed content.
+    - Token expired: generate a new token or implement dynamic token renewal.
 
 ### 🔧 Development Commands
 
@@ -255,10 +330,13 @@ docker-compose down
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| 🏠 **Main Application** | http://localhost:4100 | Primary web interface |
-| 📚 **API Documentation** | http://localhost:4100/swagger-ui.html | Interactive API docs |
-| 🛡️ **Admin Panel** | http://localhost:4100/admin | Administrative interface |
-| 🗄️ **H2 Console** | http://localhost:4100/h2-console | Database management |
+| 🏠 **Main Application** | http://localhost:8080 | Primary web interface |
+| 📚 **API Documentation** | http://localhost:8080/swagger-ui.html | Interactive API docs |
+| 🛡️ **Admin Panel** | http://localhost:8080/admin | Administrative interface |
+| 🗄️ **H2 Console** | http://localhost:8080/h2-console | Database management |
+
+| 🎥 **Live Meeting (Agora)** | http://localhost:8080/start_meeting | Start/join live session |
+| 📝 **Whiteboard** | http://localhost:8080/whiteboard | Collaborative whiteboard |
 
 </div>
 
@@ -472,7 +550,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 </td>
 <td align="center">
 <img src="https://img.shields.io/badge/📖-Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white" alt="Docs"><br>
-<a href="https://github.com/yourusername/VirtualCLass-1/wiki">View Wiki</a>
+<a href="https://github.com/intensealchemist/VirtualCLass-1/wiki">View Wiki</a>
 </td>
 </tr>
 </table>
@@ -485,7 +563,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **⭐ Star this repository if you find it helpful!**
 
-<img src="https://img.shields.io/github/stars/yourusername/VirtualCLass-1?style=social" alt="GitHub stars">
+<img src="https://img.shields.io/github/intensealchemist/VirtualCLass-1?style=social" alt="GitHub stars">
 
 
 </div>

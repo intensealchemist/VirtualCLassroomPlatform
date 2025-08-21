@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome • Virtual Classroom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/modern-theme.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container d-flex justify-between align-center">
+      <a href="/" class="navbar-brand">
+        <svg class="logo-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:24px;height:24px;margin-right:8px;">
+          <polygon points="12,3 2,8 12,13 22,8 12,3" fill="currentColor"></polygon>
+          <rect x="11" y="13" width="2" height="6" rx="1" fill="currentColor"></rect>
+        </svg>
+        <span>Virtual Classroom</span>
+      </a>
+      <div>
+        <a href="/login" class="btn btn-outline btn-sm">Login</a>
+        <a href="/register" class="btn btn-primary btn-sm">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <h1 class="mb-0">Welcome to Virtual Classroom</h1>
+      <p class="muted">Explore featured courses and live learning experiences. Please sign in to access your dashboard.</p>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px; padding-bottom:48px;">
+    <section class="card">
+      <div class="card-header"><h3 class="mb-0">Featured Courses</h3></div>
+      <div class="card-body">
+        <div class="course-grid">
+          <div class="course-card">
+            <div class="card-header"><h4 class="mb-0">Go Programming</h4></div>
+            <div class="card-body">
+              <p>Build fast, concurrent backends with Go.</p>
+              <a href="/login" class="btn btn-primary btn-sm">Sign in to enroll</a>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="card-header"><h4 class="mb-0">Android Development</h4></div>
+            <div class="card-body">
+              <p>Create modern Android apps with Kotlin.</p>
+              <a href="/login" class="btn btn-primary btn-sm">Sign in to enroll</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="padding: 24px 0;">
+    <div class="container text-center">
+      <p class="mb-0">&copy; <span id="year"></span> Virtual Classroom Platform</p>
+    </div>
+  </footer>
+
+  <script>
+    (function(){ var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear(); })();
+  </script>
+</body>
+</html>

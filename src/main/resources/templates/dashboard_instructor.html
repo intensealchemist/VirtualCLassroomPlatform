@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard • Virtual Classroom</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/modern-theme.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- Top Nav -->
+    <nav class="navbar" role="navigation" aria-label="Primary">
+        <div class="container d-flex justify-between align-center">
+            <a href="/" class="navbar-brand" aria-label="Virtual Classroom home">
+                <svg class="logo-cap" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                    style="width:24px;height:24px;margin-right:8px;">
+                    <polygon points="12,3 2,8 12,13 22,8 12,3" fill="currentColor"></polygon>
+                    <rect x="11" y="13" width="2" height="6" rx="1" fill="currentColor"></rect>
+                </svg>
+                <span>Virtual Classroom</span>
+            </a>
+            <div class="d-flex align-center navbar-actions" style="gap: 8px;">
+                <a href="/dashboard" class="btn btn-outline btn-sm"><i class="fa-solid fa-user-graduate"></i>&nbsp;
+                    Student View</a>
+                <form th:action="@{/logout}" method="post" style="margin:0;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-outline btn-sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container d-flex justify-between align-center">
+            <div>
+                <h1 class="mb-0">Instructor Dashboard</h1>
+                <p class="muted">Manage courses, monitor student progress, and handle grading</p>
+            </div>
+            <div class="d-flex" style="gap: 12px; flex-wrap: wrap;">
+                <a href="/start_meeting" class="btn btn-secondary"><i class="fa-solid fa-video"></i>&nbsp; Start Live
+                    Session</a>
+                <a href="/instructor/courses/create" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;
+                    Create Course</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding-top: 24px; padding-bottom: 48px;">
+        <div th:if="${message}" class="alert alert-success" role="status" style="margin-bottom:16px;">
+            <i class="fa-solid fa-circle-check"></i>
+            <span th:text="${message}">Action completed successfully.</span>
+        </div>
+        <!-- KPI Cards -->
+        <section class="grid-4 mb-4">
+            <div class="kpi-card">
+                <div class="kpi-icon" style="--kpi-color: var(--secondary-color)"><i
+                        class="fa-solid fa-chalkboard-user"></i></div>
+                <div>
+                    <div class="kpi-value" th:text="${stats.coursesTaught}">0</div>
+                    <div class="kpi-label">Courses Taught</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon" style="--kpi-color: #10b981"><i class="fa-solid fa-user-group"></i></div>
+                <div>
+                    <div class="kpi-value" th:text="${stats.activeStudents}">0</div>
+                    <div class="kpi-label">Active Students</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon" style="--kpi-color: #f59e0b"><i class="fa-solid fa-clipboard-check"></i></div>
+                <div>
+                    <div class="kpi-value" th:text="${stats.assignmentsToGrade}">0</div>
+                    <div class="kpi-label">Assignments to Grade</div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon" style="--kpi-color: #3b82f6"><i class="fa-solid fa-calendar-day"></i></div>
+                <div>
+                    <div class="kpi-value" th:text="${stats.upcomingSessions}">0</div>
+                    <div class="kpi-label">Upcoming Sessions</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts + Recent Activity -->
+        <section class="grid-2 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Student Engagement</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="engagementChart" height="160" aria-label="Student engagement chart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Recent Instructor Activity</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="timeline" th:if="${recentActivities}">
+                        <li th:each="item : ${recentActivities}">
+                            <div class="time" th:text="${item.time}">Just now</div>
+                            <div class="desc" th:text="${item.description}">Published Lesson 5 in Android</div>
+                        </li>
+                    </ul>
+                    <div th:unless="${recentActivities}" class="muted">No recent activity.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Managed -->
+        <section class="card">
+            <div class="card-header d-flex justify-between align-center">
+                <h3 class="mb-0">Your Courses</h3>
+                <div class="d-flex" style="gap: 8px;">
+                    <a href="/instructor/courses/create" class="btn btn-primary btn-sm"><i
+                            class="fa-solid fa-plus"></i>&nbsp; New Course</a>
+                    <a href="/instructor" class="btn btn-outline btn-sm">Manage</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="course-grid" th:if="${courses}" style="margin-top: 12px;">
+                    <div class="course-card" th:each="course : ${courses}">
+                        <div class="card-header">
+                            <h4 class="mb-0" th:text="${course.name}">Course Title</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2" th:text="${course.description}">Course description...</p>
+                            <div class="d-flex justify-between align-center">
+                                <div class="muted">Completion</div>
+                                <a th:href="@{/instructor/courses/{id}/edit(id=${course.id})}"
+                                    class="btn btn-secondary btn-sm">Edit</a>
+                            </div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar" th:style="'width:' + ${course.progress} + '%'"
+                                    role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                    th:aria-valuenow="${course.progress}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:unless="${courses}" class="muted">You have not created any courses yet.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" style="padding: 24px 0;">
+        <div class="container text-center">
+            <p class="mb-0">&copy; <span id="year"></span> Virtual Classroom Platform</p>
+        </div>
+    </footer>
+
+    <script th:inline="none" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="none">
+        (function () {
+            var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+            var ctx = document.getElementById('engagementChart');
+            if (ctx && window.Chart) {
+                var g = ctx.getContext('2d').createLinearGradient(0, 0, 0, 180);
+                g.addColorStop(0, 'rgba(34,197,94,0.35)');
+                g.addColorStop(1, 'rgba(34,197,94,0.02)');
+                new Chart(ctx, { type: 'line', data: { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], datasets: [{ label: 'Avg. Minutes / Student', data: [35, 42, 38, 50], fill: true, backgroundColor: g, borderColor: '#22c55e', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#22c55e', tension: 0.35 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.06)' }, beginAtZero: true } }, plugins: { legend: { display: false } } } });
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

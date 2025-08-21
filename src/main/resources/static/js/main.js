@@ -1,6 +1,7 @@
-const APP_ID = "YOUR APP ID"
-const TOKEN = "YOUR APP TOKEN"
-const CHANNEL = "main"
+const __CONF__ = (typeof window !== 'undefined' && window.AGORA_CONF) ? window.AGORA_CONF : {};
+const APP_ID = __CONF__.appId || "YOUR APP ID";
+const TOKEN = (typeof __CONF__.token === 'string' || __CONF__.token === null) ? __CONF__.token : "YOUR APP TOKEN";
+const CHANNEL = __CONF__.channel || "main";
 const UID = '12345';
 const client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
 

@@ -55,6 +55,13 @@ keystore.p12
 *.mv.db
 *.trace.db
 
+# SQL dumps/backups (but keep versioned migrations)
+*.sql
+*.sql.gz
+*.dump
+*.bak
+!src/main/resources/db/migration/**/*.sql
+
 # Spring Boot local configs
 application-local.properties
 application-local.yml
@@ -67,8 +74,19 @@ uploads/**
 D:/VirtualCLass-1/src/main/resources/static/vid/
 static/vid/
 
-# Maven wrapper cached
-.mvn/wrapper/
+# Docs (keep folders, ignore large assets)
+docs/screenshots/*
+!docs/screenshots/.gitkeep
+docs/exports/*
+
+# Patch/merge artifacts
+*.orig
+*.rej
+
+# Maven wrapper
+# Ignore wrapper contents but keep the JAR tracked
+.mvn/wrapper/**
+!.mvn/wrapper/maven-wrapper.jar
 
 # Crash reports / temp
 hs_err_pid*

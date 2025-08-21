@@ -1,57 +1,172 @@
+/* Ensure readable text on light navbar */
+.navbar,
+.navbar .nav-link,
+.navbar .navbar-text {
+    color: var(--dark-gray) !important;
+}
+
+.navbar .text-muted,
+.navbar .muted {
+    color: #475467;
+    /* darker muted for readability */
+}
+
+.navbar .nav-link:link,
+.navbar .nav-link:visited {
+    color: var(--dark-gray) !important;
+}
+
+.navbar .nav-link:hover {
+    color: var(--secondary-color);
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+    color: var(--secondary-color);
+}
+
+/* Stronger readability for auxiliary navbar text */
+.navbar .navbar-text,
+.navbar .status-text,
+.navbar .welcome-text {
+    color: var(--dark-gray) !important;
+    font-weight: 600;
+}
+
+/* Strengthen generic navbar anchors/text (excluding buttons) */
+.navbar a.nav-link:not(.btn),
+.navbar span,
+.navbar li {
+    color: var(--dark-gray) !important;
+}
+
+/* Force specified navbar links/text to pure black */
+.navbar a.nav-link:not(.btn),
+.navbar .navbar-text,
+.navbar .welcome-text {
+    color: #000000 !important;
+}
+
+.navbar a.nav-link:not(.btn):hover,
+.navbar a.nav-link:not(.btn):focus {
+    color: #000000 !important;
+}
+
+/* Catch-all: any non-button anchor in navbar should be black */
+.navbar a:not(.btn) {
+    color: #000000 !important;
+}
+
+/* Override utility classes that may force white */
+.navbar .text-white,
+.navbar .text-light {
+    color: #000000 !important;
+}
+
 /* Modern Virtual Classroom CSS Framework */
 :root {
-    /* Color Palette */
-    --primary-color: #667eea;
-    --primary-dark: #5a6fd8;
-    --secondary-color: #764ba2;
-    --accent-color: #f093fb;
-    --success-color: #4ecdc4;
-    --warning-color: #ffe066;
-    --error-color: #ff6b6b;
-    
+    /* Color Palette (Professional, Accessible) */
+    --primary-color: #1F3A5F;
+    /* Deep Navy */
+    --primary-dark: #162A46;
+    /* Dark Navy */
+    --secondary-color: #2E86AB;
+    /* Cobalt */
+    --accent-color: #0FB5B5;
+    /* Teal */
+    --success-color: #12A594;
+    /* Emerald/Teal */
+    --warning-color: #F59E0B;
+    /* Amber 600 */
+    --error-color: #D92D20;
+    /* Red 600 */
+
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-success: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-    --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    
+    --gradient-primary: linear-gradient(135deg, #1F3A5F 0%, #2E86AB 100%);
+    --gradient-secondary: linear-gradient(135deg, #0FB5B5 0%, #2E86AB 100%);
+    --gradient-success: linear-gradient(135deg, #12A594 0%, #0E7C6D 100%);
+    --gradient-dark: linear-gradient(135deg, #0B1220 0%, #162A46 100%);
+    --gradient-hero: linear-gradient(135deg, #0B1220 0%, #1F3A5F 55%, #2E86AB 100%);
+
     /* Neutral Colors */
-    --white: #ffffff;
-    --light-gray: #f8f9fa;
-    --gray: #6c757d;
-    --dark-gray: #343a40;
+    --white: #FFFFFF;
+    --light-gray: #F5F7FA;
+    --gray: #667085;
+    --dark-gray: #101828;
     --black: #000000;
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-xxl: 3rem;
-    
+
+    /* Spacing (increase section rhythm for airy feel) */
+    --spacing-xs: 0.3rem;
+    --spacing-sm: 0.6rem;
+    --spacing-md: 1.1rem;
+    --spacing-lg: 1.75rem;
+    --spacing-xl: 2.5rem;
+    --spacing-xxl: 4rem;
+
     /* Typography */
     --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.04);
-    
-    /* Border Radius */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
+
+    /* Shadows (softened for minimal look) */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.10);
+    --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.10);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 16px 24px rgba(0, 0, 0, 0.14);
+
+    /* Border Radius (reduced for a crisper aesthetic) */
+    --radius-sm: 0.2rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
     --radius-full: 9999px;
-    
+
     /* Transitions */
     --transition-fast: 0.15s ease-in-out;
     --transition-normal: 0.3s ease-in-out;
     --transition-slow: 0.5s ease-in-out;
+}
+
+/* Footer theme (light text on dark background) */
+.footer,
+.site-footer {
+    background: #0B1220;
+    color: #E6E7EB;
+}
+
+.footer h4,
+.footer h5,
+.footer h6,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6 {
+    color: #F9FAFB;
+}
+
+.footer p,
+.site-footer p {
+    color: #E6E7EB;
+}
+
+.footer small,
+.site-footer small,
+.footer li,
+.site-footer li {
+    color: #DDE1E6;
+}
+
+.footer a,
+.site-footer a {
+    color: #9AE6FF;
+}
+
+.footer a:hover,
+.site-footer a:hover {
+    color: #CFF2FF;
+}
+
+.footer .text-muted,
+.site-footer .text-muted {
+    color: #A9B1BC;
 }
 
 /* Reset and Base Styles */
@@ -73,19 +188,41 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-family-heading);
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: var(--spacing-md);
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
 
 p {
     margin-bottom: var(--spacing-md);
@@ -98,7 +235,7 @@ a {
 }
 
 a:hover {
-    color: var(--primary-dark);
+    color: var(--secondary-color);
     text-decoration: underline;
 }
 
@@ -109,29 +246,81 @@ a:hover {
     padding: 0 var(--spacing-md);
 }
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+    text-align: center;
+}
 
-.d-flex { display: flex; }
-.d-block { display: block; }
-.d-none { display: none; }
+.text-left {
+    text-align: left;
+}
 
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.align-center { align-items: center; }
+.text-right {
+    text-align: right;
+}
 
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
-.mb-4 { margin-bottom: var(--spacing-xl); }
+.d-flex {
+    display: flex;
+}
 
-.mt-0 { margin-top: 0; }
-.mt-1 { margin-top: var(--spacing-sm); }
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-.mt-4 { margin-top: var(--spacing-xl); }
+.d-block {
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-3 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mb-4 {
+    margin-bottom: var(--spacing-xl);
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-md);
+}
+
+.mt-3 {
+    margin-top: var(--spacing-lg);
+}
+
+.mt-4 {
+    margin-top: var(--spacing-xl);
+}
 
 /* Buttons */
 .btn {
@@ -149,7 +338,7 @@ a:hover {
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: var(--shadow-md);
     text-decoration: none;
 }
@@ -171,13 +360,34 @@ a:hover {
 
 .btn-outline {
     background: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .btn-outline:hover {
-    background: var(--primary-color);
+    background: var(--secondary-color);
     color: var(--white);
+}
+
+/* Improve outline contrast on hero */
+.hero .btn-outline {
+    border-color: rgba(255, 255, 255, 0.95);
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.hero .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.24);
+    border-color: #FFFFFF;
+    color: #0B1220;
+}
+
+.hero .btn-outline:focus {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 2px;
 }
 
 .btn-lg {
@@ -186,8 +396,8 @@ a:hover {
 }
 
 .btn-sm {
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: 0.875rem;
+    padding: calc(var(--spacing-xs) + 0.1rem) calc(var(--spacing-md));
+    font-size: 0.9rem;
 }
 
 /* Cards */
@@ -208,6 +418,7 @@ a:hover {
     padding: var(--spacing-lg);
     background: var(--gradient-primary);
     color: var(--white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .card-body {
@@ -240,44 +451,311 @@ a:hover {
     font-size: 1rem;
     transition: var(--transition-fast);
     background: var(--white);
+    color: var(--dark-gray);
+    caret-color: var(--dark-gray);
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.15);
 }
 
 .form-control::placeholder {
     color: var(--gray);
 }
 
+/* Fix browser autofill colors so text remains readable */
+input.form-control:-webkit-autofill,
+textarea.form-control:-webkit-autofill,
+select.form-control:-webkit-autofill {
+    -webkit-text-fill-color: var(--dark-gray) !important;
+    box-shadow: 0 0 0px 1000px var(--white) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Ensure high contrast in dark mode variables as well */
+@media (prefers-color-scheme: dark) {
+    .form-control {
+        background: var(--white);
+        color: var(--dark-gray);
+        caret-color: var(--dark-gray);
+        border-color: rgba(230, 231, 235, 0.18);
+    }
+
+    input.form-control:-webkit-autofill,
+    textarea.form-control:-webkit-autofill,
+    select.form-control:-webkit-autofill {
+        -webkit-text-fill-color: var(--dark-gray) !important;
+        box-shadow: 0 0 0px 1000px var(--white) inset;
+    }
+}
+
 /* Navigation */
 .navbar {
     background: var(--white);
-    box-shadow: var(--shadow-sm);
-    padding: var(--spacing-md) 0;
+    padding: 1rem 0;
+    /* increased breathing room */
+    border-bottom: 1px solid rgba(16, 24, 40, 0.06);
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
     position: sticky;
     top: 0;
     z-index: 1000;
+}
+
+/* Mobile hamburger toggle */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(16, 24, 40, 0.12);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--dark-gray);
+    display: block;
+    transition: var(--transition-fast);
 }
 
 .navbar-brand {
     font-family: var(--font-family-heading);
     font-size: 1.5rem;
     font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-color);
+    /* Solid color for better readability */
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: currentColor;
+    background-clip: initial;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-nav {
     display: flex;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
+    gap: var(--spacing-md);
+    justify-content: flex-start;
+    /* free space for auth actions */
+    min-width: 0;
+    /* allow shrinking */
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.navbar .container>.d-flex.align-center {
+    display: flex;
+    align-items: center;
     gap: var(--spacing-lg);
+    /* slightly tighter */
+    column-gap: var(--spacing-lg);
+    flex-wrap: nowrap;
+}
+
+.navbar .navbar-brand {
+    margin-right: var(--spacing-xl);
+}
+
+.navbar .welcome-text {
+    margin: 0;
+}
+
+.navbar-right {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+.navbar-right .navbar-nav {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.navbar .navbar-actions {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    column-gap: var(--spacing-sm);
+    flex: 0 0 auto;
+}
+
+.navbar .ml-3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+    /* remove heavy divider */
+}
+
+/* Keep auth buttons inline within the navbar (do not rely on Thymeleaf attributes) */
+.navbar .navbar-actions>span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: nowrap;
+}
+
+.navbar .navbar-actions a.btn {
+    white-space: nowrap;
+    display: inline-flex;
+}
+
+/* Ensure clear, subtle spacing between action buttons */
+.navbar .ml-3>*+* {
+    margin-left: var(--spacing-sm);
+}
+
+.navbar .ml-3 .btn+.btn {
+    margin-left: var(--spacing-sm);
+}
+
+.navbar .btn {
+    box-shadow: none;
+}
+
+.navbar .btn.btn-outline {
+    box-shadow: none;
+}
+
+/* Gentle spacing for CTA within nav, no harsh divider */
+.navbar-nav li {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav li:last-child {
+    margin-right: var(--spacing-xxl);
+    padding-right: 0;
+    border-right: none;
+}
+
+.navbar-nav li:last-child>.btn {
+    margin-left: var(--spacing-sm);
+}
+
+/* Welcome item placed before About with extra spacing */
+.navbar-nav .nav-welcome {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-right: var(--spacing-xl);
+}
+
+.navbar .btn.btn-sm {
+    padding: 0.375rem 0.75rem;
+    line-height: 1.15;
+    font-weight: 600;
+}
+
+/* Tighter layout on medium screens */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0.5rem 0;
+    }
+
+    .navbar .container {
+        gap: var(--spacing-lg);
+    }
+
+    .navbar .welcome-text {
+        display: none;
+    }
+
+    .navbar-nav {
+        gap: var(--spacing-md);
+    }
+
+    /* Show hamburger, hide right cluster until opened */
+    .nav-toggle {
+        display: flex;
+    }
+
+    .navbar-right {
+        display: none;
+    }
+
+    .navbar.open .navbar-right {
+        display: flex;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: var(--spacing-md);
+        right: var(--spacing-md);
+        background: var(--white);
+        border: 1px solid rgba(16, 24, 40, 0.08);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        padding: var(--spacing-md);
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+
+    .navbar.open #primary-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .navbar.open .navbar-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        gap: var(--spacing-sm);
+        border-top: 1px solid rgba(16, 24, 40, 0.08);
+        padding-top: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+        width: auto;
+    }
+}
+
+/* Stack actions on small screens */
+@media (max-width: 640px) {
+    .navbar .container {
+        flex-wrap: wrap;
+    }
+
+    .navbar .navbar-brand {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .navbar-nav {
+        width: 100%;
+        justify-content: center;
+        order: 3;
+    }
+
+    .navbar .ml-3 {
+        width: auto;
+        justify-content: flex-end;
+        order: 2;
+        flex-wrap: nowrap;
+    }
 }
 
 .nav-link {
@@ -288,7 +766,23 @@ a:hover {
 
 .nav-link:hover {
     background: var(--light-gray);
-    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+/* Navbar: stronger hover/focus/active styling for About/Courses/Contact */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link:active {
+    background: var(--secondary-color) !important;
+    color: #FFFFFF !important;
+}
+
+/* Active state for navigation */
+.nav-link.active,
+.nav-link[aria-current="page"] {
+    background: rgba(46, 134, 171, 0.12);
+    /* secondary tint */
+    color: var(--secondary-color);
 }
 
 /* Hero Section */
@@ -299,6 +793,14 @@ a:hover {
     text-align: center;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
+    /* create stacking context */
+}
+
+/* Ensure all direct hero children sit above overlays */
+.hero>* {
+    position: relative;
+    z-index: 1;
 }
 
 .hero::before {
@@ -310,33 +812,140 @@ a:hover {
     bottom: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     animation: float 20s ease-in-out infinite;
+    opacity: 0.35;
+    /* dim pattern brightness */
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Subtle dark overlay for better text contrast */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0.95) 0%, rgba(11, 18, 32, 0.8) 40%, rgba(11, 18, 32, 0.95) 100%);
+    z-index: 0;
+    pointer-events: none;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl) var(--spacing-xxl);
+    display: inline-block;
+}
+
+/* Add a subtle translucent panel to improve readability of hero text */
+.hero .container {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: inline-block;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Welcome card variant (if used outside hero) */
+.welcome-card {
+    background: rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.welcome-card h1,
+.welcome-card h2,
+.welcome-card h3,
+.welcome-card h4,
+.welcome-card h5,
+.welcome-card h6 {
+    color: #FFFFFF;
+}
+
+.welcome-card p,
+.welcome-card .navbar-text,
+.welcome-card .muted {
+    color: #E6E7EB;
+}
+
+/* Buttons inside dark welcome card */
+.welcome-card .btn-outline {
+    border-color: #CFEAFE;
+    color: #E6F6FF;
+}
+
+.welcome-card .btn-outline:hover {
+    background: #2E86AB;
+    border-color: #2E86AB;
+    color: #FFFFFF;
+}
+
+.welcome-card .btn-primary,
+.welcome-card .btn-secondary {
+    color: #FFFFFF;
+}
+
+.welcome-card a {
+    color: #CFEAFE;
+}
+
+.welcome-card a:hover {
+    color: #E6F6FF;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 3.1rem;
+    /* slightly reduced */
     margin-bottom: var(--spacing-lg);
     animation: fadeInUp 1s ease-out;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.35),
+        0 2px 4px rgba(0, 0, 0, 0.35),
+        0 8px 24px rgba(0, 0, 0, 0.35);
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
 }
 
 .hero p {
     font-size: 1.25rem;
     margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
+    opacity: 1;
+    line-height: 1.8;
+    /* softer subtitle spacing */
     animation: fadeInUp 1s ease-out 0.2s both;
+    color: #FFFFFF;
+    text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.35),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
 }
 
 .hero .btn {
     animation: fadeInUp 1s ease-out 0.4s both;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes fadeInUp {
@@ -344,6 +953,7 @@ a:hover {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -403,13 +1013,25 @@ a:hover {
 }
 
 @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: var(--primary-color); }
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: var(--primary-color);
+    }
 }
 
 /* Loading Animation */
@@ -423,29 +1045,35 @@ a:hover {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        /* reduced on mobile */
     }
-    
+
     .hero p {
         font-size: 1rem;
     }
-    
+
     .course-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .navbar-nav {
         flex-direction: column;
         gap: var(--spacing-sm);
     }
-    
+
     .container {
         padding: 0 var(--spacing-sm);
     }
@@ -455,7 +1083,7 @@ a:hover {
     .hero h1 {
         font-size: 2rem;
     }
-    
+
     .btn {
         width: 100%;
         justify-content: center;
@@ -465,9 +1093,23 @@ a:hover {
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
     :root {
-        --light-gray: #1a1a1a;
-        --white: #2d2d2d;
-        --dark-gray: #e0e0e0;
+        --light-gray: #0F1624;
+        /* App background */
+        --white: #141A2A;
+        /* Card/Surface */
+        --gray: #98A2B3;
+        /* Muted text */
+        --dark-gray: #E6E7EB;
+        /* Body text */
+    }
+
+    /* Brighter links for dark backgrounds */
+    a {
+        color: #7CC5E3;
+    }
+
+    a:hover {
+        color: #9AE6FF;
     }
 }
 
@@ -488,6 +1130,141 @@ a:hover {
 .btn:focus,
 .form-control:focus,
 .nav-link:focus {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--secondary-color);
     outline-offset: 2px;
+}
+
+/* FINAL OVERRIDES: Ensure navbar text like "Welcome, Guest!" is pure black */
+.navbar .welcome-text,
+.navbar .navbar-text,
+.navbar .nav-item>a:not(.btn):not(:hover):not(:focus):not(:active),
+.navbar .nav-link:not(.btn):not(:hover):not(:focus):not(:active),
+.navbar .nav-item>span,
+.navbar a:not(.btn):not(.dropdown-toggle),
+.navbar .text-white,
+.navbar .text-light {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    /* fix cases using text-fill */
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
+    text-shadow: none !important;
+}
+
+/* Target the exact wrapper used in home.html for Welcome text */
+.navbar .mr-3,
+.navbar .mr-3 *,
+.navbar [sec\:authorize],
+.navbar [sec\:authorize] *,
+.navbar [sec\:authentication],
+.navbar [sec\:authentication] * {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-shadow: none !important;
+}
+
+/* FINAL FOOTER OVERRIDES: ensure high contrast on dark background */
+footer,
+footer *,
+.site-footer,
+.site-footer * {
+    text-shadow: none !important;
+}
+
+footer,
+.site-footer {
+    background: #0B1220 !important;
+    /* solid dark for stable contrast */
+    color: #EDEFF2 !important;
+}
+
+footer h4,
+footer h5,
+footer h6,
+.site-footer h4,
+.site-footer h5,
+.site-footer h6 {
+    color: #FFFFFF !important;
+}
+
+footer p,
+footer li,
+footer small,
+.site-footer p,
+.site-footer li,
+.site-footer small {
+    color: #DDE3EA !important;
+    opacity: 1 !important;
+}
+
+footer a,
+.site-footer a {
+    color: #CFEAFE !important;
+    /* light cyan for links */
+}
+
+footer a:hover,
+.site-footer a:hover {
+    color: #FFFFFF !important;
+}
+
+/* Footer divider line stronger but subtle */
+footer [style*="border-top"],
+.site-footer [style*="border-top"] {
+    border-top-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Dark-mode navbar brand contrast fix: ensure brand text is white on dark navbar backgrounds */
+@media (prefers-color-scheme: dark) {
+    .navbar .navbar-brand,
+    .navbar .navbar-brand *,
+    .navbar .navbar-brand .logo-cap {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35) !important;
+    }
+}
+
+/* High-contrast actions inside card headers (gradient background) */
+.card-header .btn {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+/* Primary action: use light pill for maximum contrast */
+.card-header .btn-primary {
+    background: #FFFFFF !important;
+    color: var(--primary-dark) !important;
+    border-color: #FFFFFF !important;
+    text-shadow: none !important;
+}
+
+.card-header .btn-primary:hover,
+.card-header .btn-primary:focus {
+    background: #F3F4F6 !important;
+    color: var(--primary-dark) !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Secondary/outline actions: translucent white with solid border */
+.card-header .btn-outline,
+.card-header .btn-secondary {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.card-header .btn-outline:hover,
+.card-header .btn-secondary:hover,
+.card-header .btn-outline:focus,
+.card-header .btn-secondary:focus {
+    background: rgba(255, 255, 255, 0.24) !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+}
+
+/* Ensure small buttons remain legible */
+.card-header .btn-sm {
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
