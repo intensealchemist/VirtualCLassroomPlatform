@@ -35,8 +35,6 @@
 
 </div>
 
-> Place your images under `docs/screenshots/`. Filenames above are placeholders.
-
 ## ✨ Features Overview
 
 <table>
