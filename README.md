@@ -23,8 +23,6 @@
 
 ## 📸 Screenshots
 
-<div align="center">
-
 | Home | Instructor Dashboard | Student Dashboard |
 |---|---|---|
 | ![Home](docs/screenshots/home.png) | ![Instructor Dashboard](docs/screenshots/dashboard_instructor.png) | ![Student Dashboard](docs/screenshots/dashboard_student.png) |
@@ -32,8 +30,6 @@
 | Live Meeting | Whiteboard |
 |---|---|
 | ![Live Meeting](docs/screenshots/live_meeting.png) | ![Whiteboard](docs/screenshots/whiteboard.png) |
-
-</div>
 
 ## ✨ Features Overview
 
