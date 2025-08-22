@@ -1,0 +1,167 @@
+/* Color Themes for Virtual Classroom */
+
+/* Default theme is already defined in professional-theme.css */
+
+/* Ocean Theme */
+.theme-ocean {
+    --primary-color: #0369A1;      /* Deep Blue */
+    --primary-dark: #075985;       /* Darker Blue */
+    --secondary-color: #06B6D4;    /* Cyan */
+    --secondary-light: #67E8F9;    /* Light Cyan */
+    --accent-color: #0E7490;       /* Teal */
+    --accent-light: #22D3EE;       /* Light Teal */
+    --success-color: #059669;      /* Emerald */
+    --success-light: #A7F3D0;      /* Light Emerald */
+    
+    --gradient-primary: linear-gradient(135deg, #075985 0%, #0369A1 100%);
+    --gradient-secondary: linear-gradient(135deg, #0E7490 0%, #06B6D4 100%);
+    --gradient-accent: linear-gradient(135deg, #0E7490 0%, #22D3EE 100%);
+    --gradient-hero: linear-gradient(135deg, #0F172A 0%, #075985 55%, #0369A1 100%);
+}
+
+/* Forest Theme */
+.theme-forest {
+    --primary-color: #166534;      /* Green */
+    --primary-dark: #14532D;       /* Dark Green */
+    --secondary-color: #65A30D;    /* Lime */
+    --secondary-light: #BEF264;    /* Light Lime */
+    --accent-color: #15803D;       /* Emerald */
+    --accent-light: #4ADE80;       /* Light Emerald */
+    --success-color: #16A34A;      /* Green */
+    --success-light: #86EFAC;      /* Light Green */
+    
+    --gradient-primary: linear-gradient(135deg, #14532D 0%, #166534 100%);
+    --gradient-secondary: linear-gradient(135deg, #4D7C0F 0%, #65A30D 100%);
+    --gradient-accent: linear-gradient(135deg, #15803D 0%, #4ADE80 100%);
+    --gradient-hero: linear-gradient(135deg, #0F172A 0%, #14532D 55%, #166534 100%);
+}
+
+/* Sunset Theme */
+.theme-sunset {
+    --primary-color: #9A3412;      /* Burnt Orange */
+    --primary-dark: #7C2D12;       /* Dark Orange */
+    --secondary-color: #EA580C;    /* Orange */
+    --secondary-light: #FDBA74;    /* Light Orange */
+    --accent-color: #C2410C;       /* Red Orange */
+    --accent-light: #FB923C;       /* Light Red Orange */
+    --success-color: #65A30D;      /* Lime */
+    --success-light: #BEF264;      /* Light Lime */
+    
+    --gradient-primary: linear-gradient(135deg, #7C2D12 0%, #9A3412 100%);
+    --gradient-secondary: linear-gradient(135deg, #C2410C 0%, #EA580C 100%);
+    --gradient-accent: linear-gradient(135deg, #C2410C 0%, #FB923C 100%);
+    --gradient-hero: linear-gradient(135deg, #0F172A 0%, #7C2D12 55%, #9A3412 100%);
+}
+
+/* Purple Haze Theme */
+.theme-purple {
+    --primary-color: #6D28D9;      /* Purple */
+    --primary-dark: #5B21B6;       /* Dark Purple */
+    --secondary-color: #8B5CF6;    /* Violet */
+    --secondary-light: #C4B5FD;    /* Light Violet */
+    --accent-color: #7C3AED;       /* Indigo */
+    --accent-light: #A78BFA;       /* Light Indigo */
+    --success-color: #10B981;      /* Emerald */
+    --success-light: #A7F3D0;      /* Light Emerald */
+    
+    --gradient-primary: linear-gradient(135deg, #5B21B6 0%, #6D28D9 100%);
+    --gradient-secondary: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+    --gradient-accent: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+    --gradient-hero: linear-gradient(135deg, #0F172A 0%, #5B21B6 55%, #6D28D9 100%);
+}
+
+/* Dark Mode Theme */
+.theme-dark {
+    /* Theme Colors */
+    --primary-color: #3B82F6;      /* Blue */
+    --primary-dark: #2563EB;       /* Dark Blue */
+    --secondary-color: #38BDF8;    /* Light Blue */
+    --secondary-light: #7DD3FC;    /* Very Light Blue */
+    --accent-color: #0EA5E9;       /* Sky */
+    --accent-light: #38BDF8;       /* Light Sky */
+    --success-color: #10B981;      /* Emerald */
+    --success-light: #A7F3D0;      /* Light Emerald */
+    --warning-color: #F59E0B;      /* Amber */
+    --warning-light: #FDE68A;      /* Light Amber */
+    --error-color: #EF4444;        /* Red */
+    --error-light: #FCA5A5;        /* Light Red */
+    --info-color: #6366F1;         /* Indigo */
+    --info-light: #C7D2FE;         /* Light Indigo */
+    
+    /* Inverted Background Colors */
+    --white: #1F2937;              /* Dark Gray for backgrounds */
+    --off-white: #111827;          /* Very Dark Gray for backgrounds */
+    --light-gray-50: #1F2937;      /* Dark Gray */
+    --light-gray-100: #374151;     /* Medium Dark Gray */
+    --light-gray-200: #4B5563;     /* Medium Gray */
+    --gray-300: #6B7280;           /* Gray */
+    --gray-400: #9CA3AF;           /* Medium Light Gray */
+    --gray-500: #D1D5DB;           /* Light Gray */
+    --gray-600: #E5E7EB;           /* Very Light Gray */
+    --gray-700: #F3F4F6;           /* Almost White */
+    --gray-800: #F9FAFB;           /* Off White */
+    --gray-900: #FFFFFF;           /* White */
+    --black: #FFFFFF;              /* White */
+    
+    /* Text Colors for Dark Mode */
+    --text-primary: #F9FAFB;       /* Light text for dark backgrounds */
+    --text-secondary: #E5E7EB;     /* Secondary text */
+    --text-muted: #9CA3AF;         /* Muted text */
+    --text-link: #60A5FA;          /* Link text */
+    --text-link-hover: #93C5FD;    /* Link hover */
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E3A8A 55%, #2563EB 100%);
+    --gradient-primary: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+    --gradient-secondary: linear-gradient(135deg, #0369A1 0%, #38BDF8 100%);
+}
+
+/* Theme Switcher Styles */
+.theme-switcher {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.theme-option {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.theme-option:hover {
+    transform: scale(1.1);
+}
+
+.theme-option.active {
+    border-color: var(--white);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.theme-default {
+    background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+}
+
+.theme-option.ocean {
+    background: linear-gradient(135deg, #075985 0%, #0369A1 100%);
+}
+
+.theme-option.forest {
+    background: linear-gradient(135deg, #14532D 0%, #166534 100%);
+}
+
+.theme-option.sunset {
+    background: linear-gradient(135deg, #7C2D12 0%, #9A3412 100%);
+}
+
+.theme-option.purple {
+    background: linear-gradient(135deg, #5B21B6 0%, #6D28D9 100%);
+}
+
+.theme-option.dark {
+    background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+    border: 2px solid #4B5563;
+}

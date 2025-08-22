@@ -1,8 +1,5 @@
 # Ignore large binary assets by default in docs
 # Screenshots and exports can be big; keep the folder but not the files
-screenshots/*
-!screenshots/.gitkeep
-
 exports/*
 !exports/.gitkeep
 

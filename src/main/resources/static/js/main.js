@@ -1,113 +1,175 @@
+// config (from Thymeleaf / window.AGORA_CONF)
 const __CONF__ = (typeof window !== 'undefined' && window.AGORA_CONF) ? window.AGORA_CONF : {};
-const APP_ID = __CONF__.appId || "YOUR APP ID";
-const TOKEN = (typeof __CONF__.token === 'string' || __CONF__.token === null) ? __CONF__.token : "YOUR APP TOKEN";
-const CHANNEL = __CONF__.channel || "main";
-const UID = '12345';
-const client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
+const APP_ID = __CONF__.appId ?? null;               // fail explicitly if missing
+const TOKEN = __CONF__.token ?? null;               // null if no token (dev only)
+const CHANNEL = __CONF__.channel ?? 'main';
+const UID = (__CONF__.uid !== undefined && __CONF__.uid !== null) ? Number(__CONF__.uid) : null;
 
-let localTracks = []
-let remoteUsers = {}
+// client config (rtc / vp8 is fine; change codec to 'h264' for Safari if needed)
+const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
 
-	
-	
-	
-let joinAndDisplayLocalStream = async () => {
+let localTracks = [];       // [audioTrack, videoTrack]
+let remoteUsers = {};       // map uid -> IAgoraRTCRemoteUser
+let localUid = null;        // store assigned uid after join
 
-    client.on('user-published', handleUserJoined)
-    
-    client.on('user-left', handleUserLeft)
-    
-    let UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
-
-    localTracks = await AgoraRTC.createMicrophoneAndCameraTracks() 
-	
-
-
-
-    let player = `<div class="video-container" id="user-container-${UID}">
-                        <div class="video-player" id="user-${UID}"></div>
-                  </div>`
-    document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-
-    localTracks[1].play(`user-${UID}`)
-    
-    await client.publish([localTracks[0], localTracks[1]])
+// utility: guard
+function ensureConfig() {
+    if (!APP_ID) {
+        console.error('Agora APP_ID missing. Cannot join channel.');
+        alert('Configuration error: missing Agora App ID.');
+        throw new Error('Missing Agora App ID');
+    }
 }
 
-let joinStream = async () => {
-    await joinAndDisplayLocalStream()
-    document.getElementById('join-btn').style.display = 'none'
-    document.getElementById('stream-controls').style.display = 'flex'
+async function joinAndDisplayLocalStream() {
+    ensureConfig();
+
+    // add listeners ONCE (or guard to avoid double registration)
+    client.on('user-published', handleUserJoined);
+    client.on('user-unpublished', handleUserUnpublished);
+    client.on('user-left', handleUserLeft);
+
+    // token renewal handlers (only when tokens are in use)
+    if (TOKEN) {
+        client.on('token-privilege-will-expire', async () => {
+            console.log('Token will expire soon — requesting new token from server...');
+            try {
+                const res = await fetch(`/api/video/token/refresh?channel=${encodeURIComponent(CHANNEL)}`);
+                const { token: newToken } = await res.json();
+                if (newToken) {
+                    await client.renewToken(newToken);
+                    console.log('Token renewed');
+                } else {
+                    console.warn('Server returned empty token; cannot renew.');
+                }
+            } catch (err) {
+                console.error('Failed to renew token', err);
+            }
+        });
+
+        client.on('token-privilege-did-expire', async () => {
+            console.warn('Token expired — need to re-join with new token');
+            // Optionally trigger a UI prompt to rejoin
+        });
+    }
+
+    try {
+        // Join: order -> (appId, channel, token, uid). Use server-injected UID to match token binding.
+        localUid = await client.join(APP_ID, CHANNEL, TOKEN, UID);
+
+        // create local tracks (call triggered by user gesture so browser will allow)
+        localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+
+        // render local video element
+        const player = `<div class="video-container" id="user-container-${localUid}">
+                      <div class="video-player" id="user-${localUid}"></div>
+                    </div>`;
+        document.getElementById('video-streams').insertAdjacentHTML('beforeend', player);
+        localTracks[1].play(`user-${localUid}`);
+
+        // publish
+        await client.publish([localTracks[0], localTracks[1]]);
+        console.log('Published local tracks');
+    } catch (err) {
+        console.error('Failed to join / publish', err);
+        alert('Could not join the channel. Check console for details.');
+    }
 }
 
-let handleUserJoined = async (user, mediaType) => {
-    remoteUsers[user.uid] = user 
-    await client.subscribe(user, mediaType)
+async function handleUserJoined(user, mediaType) {
+    remoteUsers[user.uid] = user;
+    await client.subscribe(user, mediaType);
 
-    if (mediaType === 'video'){
-        let player = document.getElementById(`user-container-${user.uid}`)
-        if (player != null){
-            player.remove()
+    if (mediaType === 'video') {
+        // remove if existing placeholder
+        const existing = document.getElementById(`user-container-${user.uid}`);
+        if (existing) existing.remove();
+
+        const player = `<div class="video-container" id="user-container-${user.uid}">
+                      <div class="video-player" id="user-${user.uid}"></div>
+                    </div>`;
+        document.getElementById('video-streams').insertAdjacentHTML('beforeend', player);
+
+        // user.videoTrack becomes available after subscribe
+        user.videoTrack.play(`user-${user.uid}`);
+    }
+
+    if (mediaType === 'audio') {
+        user.audioTrack.play();
+    }
+}
+
+async function handleUserUnpublished(user, mediaType) {
+    // user stopped sending track (but may still be in channel)
+    if (mediaType === 'video') {
+        const el = document.getElementById(`user-container-${user.uid}`);
+        if (el) {
+            // hide or show placeholder
+            el.remove();
+        }
+    }
+    if (mediaType === 'audio') {
+        // nothing to do; remote audio track is stopped
+    }
+}
+
+async function handleUserLeft(user) {
+    delete remoteUsers[user.uid];
+    const el = document.getElementById(`user-container-${user.uid}`);
+    if (el) el.remove();
+}
+
+async function leaveAndRemoveLocalStream() {
+    try {
+        // stop local tracks
+        for (const t of localTracks) {
+            if (!t) continue;
+            t.stop();
+            t.close();
         }
 
-        player = `<div class="video-container" id="user-container-${user.uid}">
-                        <div class="video-player" id="user-${user.uid}"></div> 
-                 </div>`
-        document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
+        // leave the channel
+        await client.leave();
 
-        user.videoTrack.play(`user-${user.uid}`)
-    }
+        // cleanup listeners
+        client.off('user-published', handleUserJoined);
+        client.off('user-unpublished', handleUserUnpublished);
+        client.off('user-left', handleUserLeft);
 
-    if (mediaType === 'audio'){
-        user.audioTrack.play()
-    }
-}
-
-let handleUserLeft = async (user) => {
-    delete remoteUsers[user.uid]
-    document.getElementById(`user-container-${user.uid}`).remove()
-}
-
-let leaveAndRemoveLocalStream = async () => {
-    for(let i = 0; localTracks.length > i; i++){
-        localTracks[i].stop()
-        localTracks[i].close()
-    }
-
-    await client.leave()
-    document.getElementById('join-btn').style.display = 'block'
-    document.getElementById('stream-controls').style.display = 'none'
-    document.getElementById('video-streams').innerHTML = ''
-}
-
-let toggleMic = async (e) => {
-    if (localTracks[0].muted){
-        await localTracks[0].setMuted(false)
-        e.target.innerText = 'Mic on'
-        e.target.style.backgroundColor = 'cadetblue'
-    }else{
-        await localTracks[0].setMuted(true)
-        e.target.innerText = 'Mic off'
-        e.target.style.backgroundColor = '#EE4B2B'
+        // reset UI
+        document.getElementById('join-btn').style.display = 'block';
+        document.getElementById('stream-controls').style.display = 'none';
+        document.getElementById('video-streams').innerHTML = '';
+        localTracks = [];
+        remoteUsers = {};
+        localUid = null;
+    } catch (err) {
+        console.error('Error leaving channel', err);
     }
 }
 
-let toggleCamera = async (e) => {
-    if(localTracks[1].muted){
-        await localTracks[1].setMuted(false)
-        e.target.innerText = 'Camera on'
-        e.target.style.backgroundColor = 'cadetblue'
-    }else{
-        await localTracks[1].setMuted(true)
-        e.target.innerText = 'Camera off'
-        e.target.style.backgroundColor = '#EE4B2B'
-    }
-	
+async function toggleMic(e) {
+    if (!localTracks[0]) return;
+    // use setMuted for quick mute/unmute (keeps capture alive)
+    const isMuted = localTracks[0].muted;
+    await localTracks[0].setMuted(!isMuted);
+    e.target.innerText = isMuted ? 'Mic on' : 'Mic off';
+    e.target.style.backgroundColor = isMuted ? 'cadetblue' : '#EE4B2B';
 }
 
+async function toggleCamera(e) {
+    if (!localTracks[1]) return;
+    const isMuted = localTracks[1].muted;
+    await localTracks[1].setMuted(!isMuted);
+    e.target.innerText = isMuted ? 'Camera on' : 'Camera off';
+    e.target.style.backgroundColor = isMuted ? 'cadetblue' : '#EE4B2B';
+}
 
-document.getElementById('join-btn').addEventListener('click', joinStream)
-document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
-document.getElementById('mic-btn').addEventListener('click', toggleMic)
-document.getElementById('camera-btn').addEventListener('click', toggleCamera)
-
+document.getElementById('join-btn').addEventListener('click', async () => {
+    await joinAndDisplayLocalStream();
+    document.getElementById('join-btn').style.display = 'none';
+    document.getElementById('stream-controls').style.display = 'flex';
+});
+document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream);
+document.getElementById('mic-btn').addEventListener('click', toggleMic);
+document.getElementById('camera-btn').addEventListener('click', toggleCamera);

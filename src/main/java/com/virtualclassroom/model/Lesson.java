@@ -72,8 +72,7 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<LessonProgress> progressRecords = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "lesson_resources", joinColumns = @JoinColumn(name = "lesson_id"))
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<LessonResource> resources = new HashSet<>();
 
     // Constructors

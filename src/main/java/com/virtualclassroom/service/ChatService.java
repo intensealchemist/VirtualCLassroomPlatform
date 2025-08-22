@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ChatService {
+public class ChatService implements ChatMessageService {
     
     @Autowired
     private ChatMessageRepository chatMessageRepository;

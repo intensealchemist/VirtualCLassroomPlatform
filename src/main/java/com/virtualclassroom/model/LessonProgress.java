@@ -115,8 +115,16 @@ public class LessonProgress {
     public Boolean getIsCompleted() { return isCompleted; }
     public void setIsCompleted(Boolean isCompleted) { this.isCompleted = isCompleted; }
     
+    // Additional methods for compatibility
+    public boolean isCompleted() { return isCompleted != null && isCompleted; }
+    public void setCompleted(boolean completed) { this.isCompleted = completed; }
+    
     public Long getTimeSpent() { return timeSpent; }
     public void setTimeSpent(Long timeSpent) { this.timeSpent = timeSpent; }
+    
+    // Additional methods for compatibility
+    public Long getTimeSpentSeconds() { return timeSpent; }
+    public void setTimeSpentSeconds(Long timeSpent) { this.timeSpent = timeSpent; }
     
     public Long getLastPosition() { return lastPosition; }
     public void setLastPosition(Long lastPosition) { this.lastPosition = lastPosition; }
@@ -129,6 +137,10 @@ public class LessonProgress {
     
     public LocalDateTime getLastAccessed() { return lastAccessed; }
     public void setLastAccessed(LocalDateTime lastAccessed) { this.lastAccessed = lastAccessed; }
+    
+    // Additional methods for compatibility
+    public LocalDateTime getLastAccessedAt() { return lastAccessed; }
+    public void setLastAccessedAt(LocalDateTime lastAccessed) { this.lastAccessed = lastAccessed; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

@@ -244,48 +244,42 @@ Follow these steps to enable live video sessions using Agora:
     - Sign up at https://console.agora.io and create a project (Web SDK).
     - Copy your project’s App ID.
 
-2. __Generate a temporary token (for development)__
-    - In the Agora Console, open your project and generate a temporary token for the channel you plan to use (default here: `main`).
-    - For quick testing you may also set `TOKEN` to `null` if your Agora project does NOT have an App Certificate enabled. Tokens are recommended and required when a certificate is enabled.
+2. __Choose your token mode__
+    - __Mode A: No‑token (dev/simple)__ — Works only if your Agora project App Certificate is disabled. The app joins with `token = null`.
+    - __Mode B: Secure tokens (recommended for prod)__ — Requires App Certificate enabled and a server‑generated RTC token per join/refresh.
 
-3. __Configure credentials (no code change required)__
-   - The page `templates/start_meeting.html` injects config to `window.AGORA_CONF`, and `static/js/main.js` reads it at runtime.
-   - Choose one of the following:
+3. __Configure credentials__
+   - The view `templates/start_meeting.html` injects `window.AGORA_CONF` used by `static/js/main.js`.
+   - Set these application properties or environment variables:
+     ```properties
+     agora.app-id=<your_app_id>
+     # For secure tokens mode, also set your app certificate and optional TTL
+     agora.app-certificate=<your_app_certificate>
+     agora.token.expire-seconds=3600
+     ```
+   - In no‑token mode, leave `agora.app-certificate` blank.
 
-   - __Option A: Environment variables__ (recommended for local dev)
-     - Windows PowerShell:
-       ```powershell
-       $env:AGORA_APP_ID = "<your_app_id>"
-       $env:AGORA_CHANNEL = "main"           # optional
-       $env:AGORA_TOKEN = "<temp_token>"     # or leave unset/null if no certificate
-       .\mvnw.cmd spring-boot:run
-       ```
+4. __Start and join a meeting__
+   - Start the app: `./mvnw spring-boot:run`
+   - Open a meeting: `http://localhost:8080/meeting/{courseId}` (e.g., `/meeting/1`).
+   - Click Join and allow camera/microphone permissions.
+   - Open the same URL in another browser/device to see remote participants.
 
-   - __Option B: application.properties__
-     - Add these keys (or set via a profile-specific properties file):
-       ```properties
-       agora.app-id=<your_app_id>
-       agora.channel=main
-       agora.token=<temp_token_or_blank>
-       ```
+5. __Token refresh endpoint__
+   - The client will call `GET /api/video/token/refresh?channel=<channel>` when tokens are about to expire.
+   - Note: `AgoraService.generateRtcTokenOrNull()` currently contains a stub — secure token generation must be implemented before Mode B works end‑to‑end.
 
-4. __Run and test locally__
-    - Start the app: `./mvnw spring-boot:run`
-    - Visit `http://localhost:8080/start_meeting`
-    - Click Join and allow camera/microphone permissions in the browser.
-    - Open the same URL in another browser or machine (using the same CHANNEL) to see remote participants.
+6. __Whiteboard (optional)__
+   - From the meeting page, click “Open Whiteboard” or go to `http://localhost:8080/whiteboard`.
 
-5. __Whiteboard (optional)__
-    - From the meeting page, click “Open Whiteboard” or go to `http://localhost:8080/whiteboard`.
+7. __Production guidance__
+   - Do not hardcode tokens client‑side. Issue short‑lived tokens server‑side and renew as needed.
+   - See: Web Token Server Guides https://docs.agora.io/en/Interactive%20Live%20Streaming/token_server?platform=All%20Platforms
 
-6. __Production guidance__
-    - Do not hardcode tokens. Implement a lightweight token server to mint short‑lived tokens on demand.
-    - See: Web Token Server Guides https://docs.agora.io/en/Interactive%20Live%20Streaming/token_server?platform=All%20Platforms
-
-7. __Common issues__
-    - 403/Invalid vendor key or token: verify `APP_ID`, `TOKEN`, and channel match; regenerate an unexpired token.
-    - No audio/video: grant browser permissions; use HTTPS in production; avoid mixed content.
-    - Token expired: generate a new token or implement dynamic token renewal.
+8. __Common issues__
+   - 403/Invalid vendor key or token: verify `APP_ID`, token (if used), channel, and expiry.
+   - No audio/video: ensure permissions; use HTTPS in production; avoid mixed content.
+   - Token expired: implement server token generation and renewal.
 
 ### 🔧 Development Commands
 
@@ -330,10 +324,10 @@ docker-compose down
 |---------|-----|-------------|
 | 🏠 **Main Application** | http://localhost:8080 | Primary web interface |
 | 📚 **API Documentation** | http://localhost:8080/swagger-ui.html | Interactive API docs |
-| 🛡️ **Admin Panel** | http://localhost:8080/admin | Administrative interface |
+| 🛡️ **Dashboards** | http://localhost:8080/dashboard | Role-based dashboards (redirects to `/dashboard/student` or `/dashboard/instructor`) |
 | 🗄️ **H2 Console** | http://localhost:8080/h2-console | Database management |
 
-| 🎥 **Live Meeting (Agora)** | http://localhost:8080/start_meeting | Start/join live session |
+| 🎥 **Live Meeting (Agora)** | http://localhost:8080/meeting/{courseId} | Start/join live session (e.g., /meeting/1) |
 | 📝 **Whiteboard** | http://localhost:8080/whiteboard | Collaborative whiteboard |
 
 </div>

@@ -9,7 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="/css/professional-theme.css">
+    <link rel="stylesheet" href="/css/enhanced-components.css">
     <link rel="stylesheet" href="/css/modern-theme.css">
+    <link rel="stylesheet" href="/css/color-themes.css">
+    <link rel="stylesheet" href="/css/text-visibility.css">
     <!-- Font Awesome for consistent vector icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfZf8H5L3N4qqQfQAtF5NCzlyzS8dY9G6V2N5VxY8hZq8YxwGzYxZ1Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -18,16 +22,20 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
+            font-family: var(--font-family-primary);
         }
 
         .landing-navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
             padding: var(--spacing-md) 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all var(--transition-normal);
         }
 
         .landing-container {
@@ -51,6 +59,11 @@
             display: inline-flex;
             align-items: center;
             gap: var(--spacing-sm);
+            transition: transform var(--transition-fast);
+        }
+        
+        .navbar-brand:hover {
+            transform: scale(1.05);
         }
         .navbar-brand .logo-cap { width: 24px; height: 24px; display: inline-block; }
 
@@ -73,8 +86,9 @@
         }
 
         .nav-link:hover {
-            background: var(--light-gray);
+            background: rgba(30, 64, 175, 0.1);
             color: var(--primary-color);
+            transform: translateY(-2px);
         }
 
         .hamburger {
@@ -98,6 +112,7 @@
             color: var(--white);
             position: relative;
             overflow: hidden;
+            background-attachment: fixed;
         }
 
         .hero-landing::before {
@@ -123,6 +138,9 @@
             font-size: 3.5rem;
             margin-bottom: var(--spacing-lg);
             animation: fadeInUp 1s ease-out;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-landing p {
@@ -202,22 +220,22 @@
     </section>
 
     <!-- Features Preview -->
-    <section style="padding: var(--spacing-xxl) 0; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+    <section style="padding: var(--spacing-xxl) 0; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);" class="reveal-on-scroll">
         <div class="container">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl);">
-                <div style="text-align: center; color: var(--white);">
+                <div style="text-align: center; color: var(--white);" class="reveal-on-scroll">
                     <div style="font-size: 3rem; margin-bottom: var(--spacing-md);"><i class="fa-solid fa-video"></i></div>
                     <h3>Live Sessions</h3>
                     <p style="opacity: 0.9;">Interactive live classes with real-time collaboration</p>
                 </div>
                 
-                <div style="text-align: center; color: var(--white);">
+                <div style="text-align: center; color: var(--white);" class="reveal-on-scroll">
                     <div style="font-size: 3rem; margin-bottom: var(--spacing-md);"><i class="fa-solid fa-book"></i></div>
                     <h3>Rich Content</h3>
                     <p style="opacity: 0.9;">Comprehensive courses with videos, assignments, and resources</p>
                 </div>
                 
-                <div style="text-align: center; color: var(--white);">
+                <div style="text-align: center; color: var(--white);" class="reveal-on-scroll">
                     <div style="font-size: 3rem; margin-bottom: var(--spacing-md);"><i class="fa-solid fa-trophy"></i></div>
                     <h3>Certifications</h3>
                     <p style="opacity: 0.9;">Earn recognized certificates upon course completion</p>
@@ -227,6 +245,8 @@
     </section>
 
     <script src="/js/script.js"></script>
+    <script src="/js/professional-animations.js"></script>
+    <script src="/js/theme-switcher.js"></script>
 </body>
 
 </html>

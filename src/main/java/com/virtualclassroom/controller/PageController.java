@@ -318,7 +318,8 @@ public class PageController {
     public String showEditCourse(
             @PathVariable("id") Long id,
             Authentication authentication,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttributes) {
         // Derive current user safely from Authentication. Avoid throwing if username not found.
         User current = null;
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -334,7 +335,14 @@ public class PageController {
                 return "redirect:/login";
             }
         }
-        Course course = courseService.getCourseById(id);
+        Course course;
+        try {
+            course = courseService.getCourseById(id);
+        } catch (RuntimeException ex) {
+            // Course not found -> redirect to instructor dashboard with an error message
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/dashboard/instructor";
+        }
         // Simple permission check mirroring service's canEdit logic
         if (!(current.isAdmin() || course.getInstructor().equals(current))) {
             // Avoid leaking existence; redirect to dashboard

@@ -5,6 +5,7 @@ import com.virtualclassroom.model.Course;
 import com.virtualclassroom.model.User;
 import com.virtualclassroom.service.CourseService;
 import com.virtualclassroom.service.VideoConferenceService;
+import com.virtualclassroom.service.AgoraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -14,6 +15,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.util.Map;
@@ -29,6 +31,9 @@ public class VideoConferenceController {
     
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+    
+    @Autowired
+    private AgoraService agoraService;
     
     @MessageMapping("/video.join/{courseId}")
     @SendTo("/topic/video/{courseId}")
@@ -174,4 +179,49 @@ public class VideoConferenceController {
         
         return videoConferenceService.endSession(courseId, user);
     }
+
+    // Token refresh endpoint used by the frontend when token is about to expire
+    @GetMapping("/api/video/token/refresh")
+    @ResponseBody
+    public Map<String, Object> refreshAgoraToken(@RequestParam("channel") String channel,
+                                                 Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        int uid = user.getId().intValue();
+        String newToken = agoraService.generateRtcTokenOrNull(channel, String.valueOf(uid), "publisher");
+        return Map.of(
+                "token", newToken,
+                "expiresAt", agoraService.getExpiryTimestamp()
+        );
+    }
+
+    // Render the start meeting page with Agora configuration in the model
+    @GetMapping("/meeting/{courseId}")
+    public String renderMeetingPage(@PathVariable Long courseId,
+                                    @RequestParam(value = "channel", required = false) String channel,
+                                    Authentication authentication,
+                                    Model model) {
+        // Resolve course for basic validation (optional)
+        Course course = courseService.getCourseById(courseId);
+        if (course == null) {
+            throw new RuntimeException("Course not found");
+        }
+
+        String resolvedChannel = (channel != null && !channel.isBlank()) ? channel : ("course-" + courseId);
+
+        // Numeric UID bound to current user (recommended when generating tokens with uid)
+        int uid = (authentication != null && authentication.getPrincipal() instanceof User)
+                ? ((User) authentication.getPrincipal()).getId().intValue()
+                : 0;
+
+        String token = agoraService.generateRtcTokenOrNull(resolvedChannel, String.valueOf(uid), "publisher");
+
+        model.addAttribute("appId", agoraService.getAppId());
+        model.addAttribute("channel", resolvedChannel);
+        model.addAttribute("token", token);
+        model.addAttribute("uid", uid);
+
+        return "start_meeting";
+    }
+
+    
 }

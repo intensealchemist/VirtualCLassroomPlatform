@@ -1,0 +1,190 @@
+/* Text Visibility CSS for Virtual Classroom */
+
+/* Base Text Colors */
+body {
+    color: var(--text-primary, var(--gray-800));
+}
+
+/* Text Color Classes */
+.text-on-dark {
+    color: var(--text-primary, #F9FAFB) !important;
+}
+
+.text-on-light {
+    color: var(--gray-800, #1F2937) !important;
+}
+
+.text-on-primary {
+    color: white !important;
+}
+
+.text-on-secondary {
+    color: white !important;
+}
+
+.text-on-accent {
+    color: white !important;
+}
+
+.text-on-success {
+    color: white !important;
+}
+
+.text-on-warning {
+    color: var(--gray-900, #111827) !important;
+}
+
+.text-on-error {
+    color: white !important;
+}
+
+.text-on-info {
+    color: white !important;
+}
+
+/* Text Visibility for Gradient Backgrounds */
+.text-on-gradient {
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Muted Text */
+.text-muted {
+    color: var(--text-muted, var(--gray-500)) !important;
+}
+
+/* Links on Different Backgrounds */
+.link-on-dark {
+    color: var(--text-link, var(--secondary-light)) !important;
+}
+
+.link-on-dark:hover {
+    color: var(--text-link-hover, var(--secondary-color)) !important;
+}
+
+.link-on-light {
+    color: var(--primary-color) !important;
+}
+
+.link-on-light:hover {
+    color: var(--secondary-color) !important;
+}
+
+/* Contrast Helpers */
+.high-contrast {
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Text on Hero Sections */
+.hero-text {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark Theme Text Adjustments */
+.theme-dark {
+    color: var(--text-primary);
+}
+
+.theme-dark h1, 
+.theme-dark h2, 
+.theme-dark h3, 
+.theme-dark h4, 
+.theme-dark h5, 
+.theme-dark h6 {
+    color: var(--text-primary);
+}
+
+.theme-dark p {
+    color: var(--text-secondary);
+}
+
+.theme-dark a {
+    color: var(--text-link);
+}
+
+.theme-dark a:hover {
+    color: var(--text-link-hover);
+}
+
+.theme-dark .text-muted {
+    color: var(--text-muted);
+}
+
+/* Fix for navbar text in dark theme */
+.theme-dark .landing-navbar {
+    background: var(--off-white);
+}
+
+.theme-dark .nav-link {
+    color: var(--text-primary);
+}
+
+.theme-dark .nav-link:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--primary-color);
+}
+
+/* Fix for buttons in dark theme */
+.theme-dark .btn-outline {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.theme-dark .btn-outline:hover {
+    color: var(--white);
+}
+
+/* Fix for cards in dark theme */
+.theme-dark .card {
+    background: var(--light-gray-50);
+    border-color: var(--light-gray-200);
+}
+
+.theme-dark .card-title {
+    color: var(--text-primary);
+}
+
+.theme-dark .card-text {
+    color: var(--text-secondary);
+}
+
+/* Fix for form elements in dark theme */
+.theme-dark input,
+.theme-dark textarea,
+.theme-dark select {
+    background-color: var(--light-gray-100);
+    border-color: var(--light-gray-200);
+    color: var(--text-primary);
+}
+
+.theme-dark input::placeholder,
+.theme-dark textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* Fix for tables in dark theme */
+.theme-dark table {
+    color: var(--text-primary);
+}
+
+.theme-dark th {
+    background-color: var(--light-gray-100);
+}
+
+.theme-dark tr:nth-child(even) {
+    background-color: var(--light-gray-50);
+}
+
+.theme-dark tr:nth-child(odd) {
+    background-color: var(--off-white);
+}
+
+/* Fix for code blocks in dark theme */
+.theme-dark code,
+.theme-dark pre {
+    background-color: var(--off-white);
+    color: var(--text-primary);
+    border-color: var(--light-gray-200);
+}

@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 @Component
 public class JwtUtil {
 
-    @Value("${app.jwt.secret:mySecretKey123456789012345678901234567890}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${app.jwt.expiration:86400}") // 24 hours in seconds
-    private int jwtExpirationInSeconds;
+    @Value("${jwt.expiration}") // 24 hours in milliseconds
+    private int jwtExpirationInMs;
 
-    @Value("${app.jwt.refresh-expiration:604800}") // 7 days in seconds
-    private int refreshTokenExpirationInSeconds;
+    @Value("${jwt.refresh-expiration:604800000}") // 7 days in milliseconds
+    private int refreshTokenExpirationInMs;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
@@ -37,7 +37,7 @@ public class JwtUtil {
 
     public String generateTokenForUser(User user) {
         Instant now = Instant.now();
-        Instant expiration = now.plus(jwtExpirationInSeconds, ChronoUnit.SECONDS);
+        Instant expiration = now.plus(jwtExpirationInMs, ChronoUnit.MILLIS);
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
@@ -55,7 +55,7 @@ public class JwtUtil {
 
     public String generateRefreshToken(User user) {
         Instant now = Instant.now();
-        Instant expiration = now.plus(refreshTokenExpirationInSeconds, ChronoUnit.SECONDS);
+        Instant expiration = now.plus(refreshTokenExpirationInMs, ChronoUnit.MILLIS);
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
@@ -140,10 +140,10 @@ public class JwtUtil {
     }
 
     public long getExpirationTimeInMillis() {
-        return jwtExpirationInSeconds * 1000L;
+        return jwtExpirationInMs;
     }
 
     public long getRefreshExpirationTimeInMillis() {
-        return refreshTokenExpirationInSeconds * 1000L;
+        return refreshTokenExpirationInMs;
     }
 }
